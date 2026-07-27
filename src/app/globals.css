@@ -1,0 +1,456 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------------ */
+/*  A.O.A — Broadsheet design system, retuned to the academy palette.        */
+/*                                                                          */
+/*  Ported from the Claude Design project "Nūr Academy design system":       */
+/*    _ds/broadsheet-…/styles.css    → tokens + component classes           */
+/*    _ds/broadsheet-…/_ds_bundle.js → the separation filter (see            */
+/*                                     components/nur/PrintPlates.tsx)      */
+/*                                                                          */
+/*  Palette: #F1F4FB #D5DEEE #B2CAF0 #8BAFE1 #628ECD #3B5987                 */
+/* ------------------------------------------------------------------------ */
+
+@theme {
+  /* --- Ground --- */
+  --color-bg: #f1f4fb;
+  --color-surface: #d5deee;
+  --color-text: #1b2a45;
+  --color-divider: color-mix(in srgb, #1b2a45 18%, transparent);
+
+  /* --- Accent ramp (the palette, extended at both ends) --- */
+  --color-accent: #3b5987;
+  --color-accent-100: #f1f4fb;
+  --color-accent-200: #d5deee;
+  --color-accent-300: #b2caf0;
+  --color-accent-400: #8bafe1;
+  --color-accent-500: #628ecd;
+  --color-accent-600: #2f4a72;
+  --color-accent-700: #3b5987;
+  --color-accent-800: #24395a;
+  --color-accent-900: #16243a;
+
+  --color-accent-2: #628ecd;
+  --color-accent-2-100: #e8effa;
+  --color-accent-2-200: #d5deee;
+  --color-accent-2-300: #b2caf0;
+  --color-accent-2-400: #8bafe1;
+  --color-accent-2-500: #628ecd;
+  --color-accent-2-600: #4a72ab;
+  --color-accent-2-700: #3b5987;
+  --color-accent-2-800: #2c4265;
+  --color-accent-2-900: #1b2a45;
+
+  --color-neutral-100: #f1f4fb;
+  --color-neutral-200: #e2e8f4;
+  --color-neutral-300: #d5deee;
+  --color-neutral-400: #b2caf0;
+  --color-neutral-500: #8bafe1;
+  --color-neutral-600: #628ecd;
+  --color-neutral-700: #4a72ab;
+  --color-neutral-800: #3b5987;
+  --color-neutral-900: #1b2a45;
+
+  /* The ink ladder. The design mixes ink into the ground at fixed
+     percentages for secondary copy; these name each step so the markup
+     can say `text-ink-78` instead of repeating a color-mix. */
+  --color-ink-82: color-mix(in srgb, #1b2a45 82%, transparent);
+  --color-ink-80: color-mix(in srgb, #1b2a45 80%, transparent);
+  --color-ink-78: color-mix(in srgb, #1b2a45 78%, transparent);
+  --color-ink-70: color-mix(in srgb, #1b2a45 70%, transparent);
+  --color-ink-65: color-mix(in srgb, #1b2a45 65%, transparent);
+  --color-ink-60: color-mix(in srgb, #1b2a45 60%, transparent);
+  --color-ink-55: color-mix(in srgb, #1b2a45 55%, transparent);
+  --color-ink-45: color-mix(in srgb, #1b2a45 45%, transparent);
+  --color-ink-30: color-mix(in srgb, #1b2a45 30%, transparent);
+  --color-ink-22: color-mix(in srgb, #1b2a45 22%, transparent);
+
+  /* --- Type --- */
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Amiri only ever sets the āyah verse; the Latin fallback is for stray glyphs. */
+  --font-arabic: var(--font-amiri), var(--font-inter), serif;
+  --font-heading-weight: 650;
+
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #1b2a45 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #1b2a45 18%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #1b2a45 24%, transparent);
+
+  --animate-nur-float: nur-float 11s ease-in-out infinite;
+}
+
+@theme {
+  --space-1: 5px;
+  --space-2: 10px;
+  --space-3: 15px;
+  --space-4: 20px;
+  --space-6: 30px;
+  --space-8: 40px;
+}
+
+/* Theme is switched by a `data-theme` attribute on <html>, set before paint
+   by the inline script in layout.tsx so there is no flash. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------------ */
+/*  Dark theme                                                              */
+/*                                                                          */
+/*  Role-based rather than a strict inversion of the ramp. On paper the      */
+/*  accent is the darkest blue; on a dark ground the action colour has to    */
+/*  be the lightest, or a filled button has no contrast against the page.    */
+/*  So `accent` and the 500–800 steps flip to the light end and the 100–400  */
+/*  steps take the deep end.                                                 */
+/* ------------------------------------------------------------------------ */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #0f1929;
+  --color-surface: #1b2a45;
+  --color-text: #e8effa;
+  --color-divider: color-mix(in srgb, #e8effa 20%, transparent);
+
+  --color-accent: #8bafe1;
+  --color-accent-100: #16243a;
+  --color-accent-200: #24395a;
+  --color-accent-300: #2f4a72;
+  --color-accent-400: #3b5987;
+  --color-accent-500: #b2caf0;
+  --color-accent-600: #b2caf0;
+  --color-accent-700: #b2caf0;
+  --color-accent-800: #d5deee;
+  --color-accent-900: #f1f4fb;
+
+  --color-accent-2: #628ecd;
+  --color-accent-2-700: #d5deee;
+
+  /* The ladder is mixed toward transparent, so over a near-black ground it
+     loses contrast faster than it does over paper. Each step is raised to
+     hold roughly the ratio the light theme gets. */
+  --color-ink-82: color-mix(in srgb, #e8effa 88%, transparent);
+  --color-ink-80: color-mix(in srgb, #e8effa 86%, transparent);
+  --color-ink-78: color-mix(in srgb, #e8effa 84%, transparent);
+  --color-ink-70: color-mix(in srgb, #e8effa 78%, transparent);
+  --color-ink-65: color-mix(in srgb, #e8effa 74%, transparent);
+  --color-ink-60: color-mix(in srgb, #e8effa 70%, transparent);
+  --color-ink-55: color-mix(in srgb, #e8effa 66%, transparent);
+  --color-ink-45: color-mix(in srgb, #e8effa 58%, transparent);
+  --color-ink-30: color-mix(in srgb, #e8effa 40%, transparent);
+  --color-ink-22: color-mix(in srgb, #e8effa 30%, transparent);
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 3px 12px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 14px 36px rgb(0 0 0 / 0.6);
+}
+
+/* The halftone screen multiplies black onto the print. On a dark ground that
+   only crushes it further, so it screens lightly instead. */
+[data-theme="dark"] .cmyk::after {
+  background-image: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.14) 30%,
+    transparent 32%
+  );
+  mix-blend-mode: screen;
+}
+
+/* The carousel dot's autoplay clock. */
+@keyframes nur-dot {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes nur-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/*  Base                                                                    */
+/* ------------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* `clip`, not `hidden`. The decorative plates deliberately overhang the
+       right edge; `overflow-x: hidden` on body propagates to the viewport,
+       and a hidden viewport is still programmatically scrollable — the page
+       could be dragged 70px sideways on a phone. `clip` cannot be scrolled,
+       and (unlike `hidden`) does not create a scroll container, so the
+       sticky masthead keeps working. */
+    overflow-x: clip;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 400;
+    text-wrap: pretty;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    line-height: 1.12;
+    /* A grotesque wants more negative tracking at display size than the
+       serif this replaced. */
+    letter-spacing: -0.021em;
+    margin: 0 0 var(--space-2);
+  }
+
+  a {
+    color: var(--color-accent-700);
+    text-underline-offset: 3px;
+  }
+  a:hover {
+    color: var(--color-accent-2-700);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+  figure {
+    margin: 0;
+  }
+
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  }
+
+  /* The FAQ rows are native <details>; drop the UA marker so the summary
+     can carry its own +. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::marker {
+    content: "";
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/*  The print treatment                                                     */
+/*                                                                          */
+/*  `.cmyk .print` — a photograph run through the #sep-all compound filter. */
+/*  Type is set flat: the Broadsheet system also carried .cmyk-head and     */
+/*  .cmyk-num, which set headlines and numerals as three misregistered      */
+/*  text plates, but those read as a drop shadow rather than as printing     */
+/*  and were removed. The filter and the press driver that animates it      */
+/*  live in components/nur/PrintPlates.tsx.                                 */
+/* ------------------------------------------------------------------------ */
+
+@layer components {
+  .cmyk {
+    position: relative;
+    background: var(--color-bg);
+  }
+
+  /* Halftone dot screen over the recombined print. */
+  .cmyk::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0.22) 30%,
+      transparent 32%
+    );
+    background-size: 3px 3px;
+    mix-blend-mode: multiply;
+  }
+
+  .cmyk .print {
+    position: relative;
+    width: 100%;
+  }
+
+  /* The separation only runs on an actual photograph. An empty slot has no
+     continuous tone to separate — the plates would just moiré against the
+     halftone screen — so the placeholder shows clean. */
+  .cmyk .print:has(img) {
+    filter: url(#sep-all);
+  }
+
+  .cmyk .print > * {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Without the press driver — it stands down on exactly these conditions —
+     hover stays the old single cut to the crisp source. */
+  @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+    .cmyk .print:has(img):hover {
+      filter: none;
+    }
+  }
+
+  /* Likewise the dot screen: it screens a print, not a placeholder. */
+  .cmyk:not(:has(img))::after {
+    content: none;
+  }
+
+  /* ---------------------------------------------------------------------- */
+  /*  Components                                                            */
+  /* ---------------------------------------------------------------------- */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--color-text);
+    background: transparent;
+    border: 1px solid transparent;
+    padding: var(--space-2) calc(var(--space-3) * 1.2);
+    border-radius: var(--radius-md);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-600);
+    color: var(--color-bg);
+  }
+  .btn-primary:active {
+    background: var(--color-accent-700);
+  }
+  .btn-secondary {
+    border-color: var(--color-divider);
+  }
+  .btn-secondary:hover {
+    background: color-mix(in srgb, var(--color-text) 7%, transparent);
+    color: var(--color-text);
+  }
+  .btn-secondary:active {
+    background: color-mix(in srgb, var(--color-text) 14%, transparent);
+  }
+  .btn-ghost {
+    color: var(--color-accent);
+    padding-inline: var(--space-1);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
+  }
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+  }
+
+  .input {
+    width: 100%;
+    min-height: 36px;
+    padding: 6px 10px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--color-text);
+    caret-color: var(--color-accent);
+    background: var(--color-surface);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--radius-md);
+  }
+  /* Measured, not inherited: the UA gray misses 4.5:1 on the surface fill;
+     65% ink measures 4.8:1 there, still a step quieter than typed text. */
+  .input::placeholder {
+    color: color-mix(in srgb, var(--color-text) 65%, transparent);
+    opacity: 1;
+  }
+  .input:hover {
+    border-color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  }
+  .input:focus-visible {
+    border-color: var(--color-accent);
+    outline-offset: 0;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+  .card-kicker {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .card-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-size: 17px;
+    line-height: 1.2;
+  }
+  .card-body {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.8;
+    flex: 1;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    /* Measured, not inherited. The Broadsheet original set 50%, which lands
+       at 2.8:1 against the card surface — under AA for 11px text. 72% gives
+       4.9:1 on paper and 7.1:1 on the dark surface. */
+    color: color-mix(in srgb, var(--color-text) 72%, transparent);
+  }
+}
