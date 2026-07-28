@@ -5,8 +5,8 @@ import { Method } from "@/components/nur/Method";
 import { Ayah } from "@/components/nur/Ayah";
 import { YoutubeStrip } from "@/components/nur/YoutubeStrip";
 import { Stats } from "@/components/nur/Stats";
-import { Teachers } from "@/components/nur/Teachers";
-import { Stories } from "@/components/nur/Stories";
+import { Founder } from "@/components/nur/Founder";
+import { StoriesSection } from "@/components/nur/StoriesSection";
 import { Faq } from "@/components/nur/Faq";
 import { Enroll } from "@/components/nur/Enroll";
 
@@ -21,8 +21,8 @@ export default function Page() {
       <Ayah />
       <YoutubeStrip />
       <Stats />
-      <Teachers />
-      <Stories />
+      <Founder />
+      <StoriesSection />
       <Faq />
       <Enroll />
     </main>

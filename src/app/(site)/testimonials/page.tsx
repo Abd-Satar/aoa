@@ -4,7 +4,7 @@ import { ArrowRight, Quotes } from "@phosphor-icons/react/ssr";
 
 import { PageHeader } from "@/components/nur/PageHeader";
 import { Reveal } from "@/components/nur/Reveal";
-import { contact, stories } from "@/lib/nur-content";
+import { getTestimonials, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Student stories — A.O.A (As-Sattar Online Academy)",
@@ -12,7 +12,9 @@ export const metadata: Metadata = {
     "What students of A.O.A — As-Sattar Online Academy — say about learning the Qur'an, Arabic and Yoruba with a named teacher. Published only with the student's permission.",
 };
 
-export default function StoriesPage() {
+export default async function StoriesPage() {
+  const stories = await getTestimonials();
+  const { contact } = await getSettings();
   const hasStories = stories.length > 0;
 
   return (
@@ -89,9 +91,9 @@ export default function StoriesPage() {
                 <div className="mt-8 flex flex-wrap items-center gap-[14px]">
                   <Link
                     className="btn btn-primary px-[22px] py-3 text-[15px] no-underline"
-                    href="/teachers"
+                    href="/#founder"
                   >
-                    See the teachers
+                    Meet the founder
                     <ArrowRight size={15} weight="duotone" />
                   </Link>
                   <Link

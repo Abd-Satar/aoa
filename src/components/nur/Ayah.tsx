@@ -1,7 +1,9 @@
 import { Reveal } from "./Reveal";
-import { ayah } from "@/lib/nur-content";
+import { getSettings } from "@/lib/content";
 
-export function Ayah() {
+export async function Ayah() {
+  const { ayah } = await getSettings();
+
   return (
     <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[110px]">
       <Reveal>

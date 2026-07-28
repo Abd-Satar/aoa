@@ -48,7 +48,7 @@ export const marqueeFacts = [
 ];
 
 export const ledger: { label: string; value: string; accent?: boolean }[] = [
-  { label: "Teachers listed by name", value: "2" },
+  { label: "Teaching online since", value: "2021" },
   { label: "Students per circle, at most", value: "5" },
   { label: "Languages of instruction", value: "3" },
   { label: "Trial lesson, price of", value: "0", accent: true },
@@ -123,11 +123,18 @@ export const ayah = {
   source: "— Sūrat al-Qamar, 54:17",
 };
 
+// Canonical URLs only. The links these came from carried share-tracking
+// parameters (?si=… on YouTube, ?igsh=…&utm_source=qr on Instagram) which are
+// generated per share, tell the platform where the click came from, and add
+// nothing for a visitor — so they are stripped.
 export const youtube = {
   text: "Every Friday our teachers publish a short tafsīr of one page — free, no enrolment needed.",
   label: "Watch the weekly series",
-  // TODO: confirm the real channel handle.
-  url: "https://youtube.com/@aoacademy",
+  url: "https://youtube.com/@satarmoyosore6147",
+};
+
+export const instagram = {
+  url: "https://www.instagram.com/abdsatar_moyosore",
 };
 
 export type Stat = {
@@ -158,59 +165,34 @@ export const stats: Stat[] = [
   },
 ];
 
-export type Teacher = {
-  id: string;
-  /** Slug for the anchor on /teachers. */
-  slug: string;
-  name: string;
-  /** Standing at the academy, e.g. "Founder & Proprietor". Optional. */
-  title?: string;
-  /** What they teach. */
-  role: string;
-  /** Pull-out facts, rendered as a rule-separated list on the profile. */
-  credentials: string[];
-  /** One paragraph per entry. */
-  body: string[];
-  placeholder: string;
-  /** Drop a real photo path here and it renders through next/image. */
-  image?: string;
+/**
+ * The founder.
+ *
+ * Wording supplied by the academy and kept as written — the institution
+ * names, their transliteration and the dates are his, not mine. Only the
+ * pull-out list below is editorial, and every line in it restates something
+ * the paragraphs already say.
+ */
+export const founder = {
+  name: "Ustaz AbdSattar Abdul Moyosore",
+  title: "Founder & Proprietor",
+  placeholder: "Portrait — Ustaz AbdSattar Abdul Moyosore",
+  /** Drop a file in /public and set this to e.g. "/founder.jpg". */
+  image: undefined as string | undefined,
+  credentials: [
+    "Al-Azhar University, Cairo",
+    "Maʿhad al-Iftāʾ wa an-Najāh — Iʿdādiyyah & Thānawiyyah",
+    "Markaz Hudā ar-Raḥmān — Arabic & Islamic studies",
+    "Markaz Ṣalāḥud-Dīn — Walīmah",
+    "Teaching since 2015 · online since 2021",
+  ],
+  body: [
+    "Ustaz AbdSattar Abdul Moyosore is a dedicated teacher of the Qur'an, Arabic, and Islamic studies, with a learning journey rooted in traditional Islamic institutions and enriched by advanced studies at Al-Azhar University, Cairo, Egypt.",
+    "He began his formal Islamic education at Markaz Ṣalāḥud-Dīn, where he completed his Walīmah, before continuing his Arabic and Islamic studies at Markaz Hudā ar-Raḥmān for several years. He later completed his Iʿdādiyyah and Thānawiyyah education at Maʿhad al-Iftāʾ wa an-Najāh, building a strong foundation in the Islamic sciences and the Arabic language.",
+    "He subsequently moved to Al-Azhar University in Cairo, Egypt, where he continued his academic and Islamic learning journey.",
+    "Ustaz AbdSattar has been teaching students physically since 2015 and has extended his teaching to learners around the world through virtual classes since 2021. His teaching experience includes working with students of different ages and backgrounds, with a particular passion for helping adults who believe they have missed their opportunity to learn. Through a patient, structured, and encouraging approach, he strives to make Qur'anic and Islamic education accessible, practical, and meaningful for every learner.",
+  ],
 };
-
-// Real staff. Names and biographies are as supplied by the academy — do not
-// re-transliterate or embellish them.
-export const teachers: Teacher[] = [
-  {
-    id: "teacher-abdsattar",
-    slug: "abdsattar-abdul-moyosore",
-    name: "Ustaz AbdSattar Abdul Moyosore",
-    title: "Founder & Proprietor",
-    role: "Head of recitation",
-    credentials: [
-      "Ijāzah in Ḥafṣ ʿan ʿĀṣim",
-      "28-link chain of transmission",
-      "Student of Al-Azhar University",
-      "11 years teaching",
-    ],
-    body: [
-      "Ijāzah in Ḥafṣ ʿan ʿĀṣim with a 28-link chain; student of Al-Azhar University. 11 years teaching, mostly to adults who thought they had missed their chance.",
-    ],
-    placeholder: "Portrait — Ustaz AbdSattar Abdul Moyosore",
-  },
-  {
-    id: "teacher-tijani",
-    slug: "tijani-adeyemi",
-    name: "Ustādh Tijani Adeyemi",
-    role: "Arabic language",
-    credentials: [
-      "Student of Al-Azhar University",
-      "Author of the Qur'anic Arabic syllabus",
-    ],
-    body: [
-      "A student of Al-Azhar University. Wrote the academy's Qur'anic Arabic syllabus and teaches some of our students with compassion and care. Known for refusing to let a grammar term pass undefined.",
-    ],
-    placeholder: "Portrait — Ustādh Tijani Adeyemi",
-  },
-];
 
 // ---------------------------------------------------------------------------
 // Our method
@@ -304,7 +286,7 @@ export const faqs = [
   },
   {
     q: "Are there female teachers for sisters?",
-    a: "Not yet. The two teachers currently listed are both men, and we would rather say so than let you find out after enrolling. We are recruiting female teachers for the sisters' circles, and they will appear on the teachers page by name before they take a class. If this decides it for you, write to admissions and we will tell you honestly where we are.",
+    a: "Not yet. Classes are currently taught by the founder, and we would rather say so than let you find out after enrolling. We are recruiting female teachers for the sisters' circles, and they will be named on the site before they take a class. If this decides it for you, write to admissions and we will tell you honestly where we are.",
   },
   {
     q: "What if I miss a week?",
@@ -312,15 +294,15 @@ export const faqs = [
   },
   {
     q: "How is the ijāzah verified?",
-    a: "Every teacher is listed on the teachers page with their licence, the length of the chain it runs through and the institution that trained them. If you want the scanned certificate or the names in the chain, ask admissions and we will send them.",
+    a: "Every teacher is named on the site with the institutions that trained them. If you want to see the certificate itself, or the names in the chain a licence runs through, ask admissions and we will send them to you.",
   },
 ];
 
 // Root-relative throughout: the nav renders on every route, so a bare "#faq"
 // would only resolve on the home page.
 export const navLinks = [
+  { href: "/", label: "Home" },
   { href: "/programs", label: "Programs" },
-  { href: "/teachers", label: "Teachers" },
   { href: "/method", label: "Our method" },
   { href: "/stories", label: "Stories" },
   { href: "/faq", label: "FAQ" },
@@ -344,7 +326,6 @@ export const siteUrl =
 export const routes = [
   "/",
   "/programs",
-  "/teachers",
   "/method",
   "/stories",
   "/testimonials",
@@ -354,7 +335,7 @@ export const routes = [
 export const contact = {
   // TODO: point at the academy's real domain — this one is derived from the
   // name, not confirmed.
-  email: "admissions@aoacademy.org",
+  email: "satarmoyosore@gmail.com",
   phone: "+234 703 522 6583",
   // E.164, for the tel: link — no spaces.
   phoneHref: "+2347035226583",
@@ -369,7 +350,6 @@ export const footerLinks = {
     { href: "/programs", label: "Kids' Foundations" },
   ],
   Academy: [
-    { href: "/teachers", label: "Teachers" },
     { href: "/method", label: "Our method" },
     { href: "/stories", label: "Stories" },
     { href: "/testimonials", label: "Student voices" },

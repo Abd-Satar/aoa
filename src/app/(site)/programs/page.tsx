@@ -4,7 +4,7 @@ import { ArrowRight } from "@phosphor-icons/react/ssr";
 
 import { PageHeader } from "@/components/nur/PageHeader";
 import { Reveal } from "@/components/nur/Reveal";
-import { programs } from "@/lib/nur-content";
+import { getPrograms } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Programs — A.O.A (As-Sattar Online Academy)",
@@ -14,8 +14,10 @@ export const metadata: Metadata = {
 
 // The tracks grouped by their kicker, in first-appearance order, so the page
 // reads as a curriculum rather than a card grid.
-function groupByKicker(list: typeof programs) {
-  const groups: { name: string; items: typeof programs }[] = [];
+type Program = Awaited<ReturnType<typeof getPrograms>>[number];
+
+function groupByKicker(list: Program[]) {
+  const groups: { name: string; items: Program[] }[] = [];
   for (const item of list) {
     const found = groups.find((g) => g.name === item.kicker);
     if (found) found.items.push(item);
@@ -24,7 +26,8 @@ function groupByKicker(list: typeof programs) {
   return groups;
 }
 
-export default function ProgramsPage() {
+export default async function ProgramsPage() {
+  const programs = await getPrograms();
   const groups = groupByKicker(programs);
 
   return (

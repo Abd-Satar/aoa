@@ -16,9 +16,26 @@ export function HeroCarousel() {
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
 
+  const [trackWidth, setTrackWidth] = useState(0);
+
   const trackRef = useRef<HTMLDivElement>(null);
   const startX = useRef(0);
   const count = heroSlides.length;
+
+  // The depth effect needs the drag expressed in slide widths, not pixels.
+  // ResizeObserver fires once on observe, so there is no initial setState in
+  // the effect body to seed it.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(([entry]) =>
+      setTrackWidth(entry.contentRect.width),
+    );
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const dragFraction = trackWidth > 0 ? drag / trackWidth : 0;
 
   const go = useCallback(
     (delta: number) => setIndex((i) => (i + delta + count) % count),
@@ -139,38 +156,62 @@ export function HeroCarousel() {
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
         >
-          {heroSlides.map((slide, i) => (
-            <div
-              key={slide.id}
-              aria-hidden={i !== index}
-              className="grid shrink-0 grow-0 basis-full items-center gap-[clamp(24px,4vw,56px)] [grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))]"
-            >
-              {/* The figure trails the scroll a little — see ScrollEffects. */}
-              <figure
-                className="cmyk m-0 overflow-visible"
-                data-parallax="-0.035"
+          {heroSlides.map((slide, i) => {
+            // How far this slide sits from the viewport, in slide widths.
+            // `dragFraction` folds the in-progress drag in, so the depth
+            // effect tracks the finger rather than snapping at the end.
+            const d = i - index + dragFraction;
+            const dist = Math.min(1, Math.abs(d));
+            const settle = dragging
+              ? "none"
+              : "opacity 900ms cubic-bezier(0.22,1,0.36,1), transform 900ms cubic-bezier(0.22,1,0.36,1)";
+
+            return (
+              <div
+                key={slide.id}
+                aria-hidden={i !== index}
+                className="grid shrink-0 grow-0 basis-full items-center gap-[clamp(24px,4vw,56px)] [grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))]"
+                style={{
+                  // Neighbours sit back rather than merely sliding past.
+                  opacity: 1 - dist * 0.62,
+                  transform: `scale(${1 - dist * 0.045})`,
+                  transition: settle,
+                }}
               >
-                <div className="print aspect-video">
-                  <ImageSlot
-                    alt={slide.title}
-                    placeholder={slide.placeholder}
-                    priority={i === 0}
-                  />
+                {/* The figure trails the scroll a little (ScrollEffects sets
+                    `translate`) and lags the slide as it moves — the two
+                    compose because they use different properties. */}
+                <figure
+                  className="cmyk m-0 overflow-visible"
+                  data-parallax="-0.035"
+                  style={{
+                    transform: `translate3d(${(d * -11).toFixed(2)}%, 0, 0)`,
+                    transition: settle,
+                  }}
+                >
+                  <div className="print aspect-video">
+                    <ImageSlot
+                      alt={slide.title}
+                      placeholder={slide.placeholder}
+                      priority={i === 0}
+                    />
+                  </div>
+                </figure>
+
+                <div>
+                  <span className="text-xs tracking-[0.1em] text-accent-700 uppercase">
+                    {slide.kicker}
+                  </span>
+                  <h2 className="mt-3 mb-0 text-[clamp(26px,2.8vw,34px)] leading-[1.15]">
+                    {slide.title}
+                  </h2>
+                  <p className="mt-4 mb-0 text-[15.5px] leading-7 text-ink-78">
+                    {slide.body}
+                  </p>
                 </div>
-              </figure>
-              <div>
-                <span className="text-xs tracking-[0.1em] text-accent-700 uppercase">
-                  {slide.kicker}
-                </span>
-                <h2 className="mt-3 mb-0 text-[clamp(26px,2.8vw,34px)] leading-[1.15]">
-                  {slide.title}
-                </h2>
-                <p className="mt-4 mb-0 text-[15.5px] leading-7 text-ink-78">
-                  {slide.body}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

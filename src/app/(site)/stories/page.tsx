@@ -4,7 +4,8 @@ import { ArrowRight, BookOpen } from "@phosphor-icons/react/ssr";
 
 import { PageHeader } from "@/components/nur/PageHeader";
 import { Reveal } from "@/components/nur/Reveal";
-import { AUDIENCES, AUDIENCE_LABEL, getStories } from "@/lib/stories";
+import { AUDIENCES, AUDIENCE_LABEL } from "@/lib/stories";
+import { getLibraryStories } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Stories — A.O.A (As-Sattar Online Academy)",
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
     "Stories of the prophets and other accounts worth sitting with, for children and for adults. Free to read, no enrolment needed.",
 };
 
-export default function StoriesPage() {
-  const stories = getStories();
+export default async function StoriesPage() {
+  const stories = await getLibraryStories();
 
   // Only render a group that has something in it, so the page never shows an
   // empty heading while the library is still filling up.
@@ -72,7 +73,9 @@ export default function StoriesPage() {
                   </span>
                 </div>
 
-                <div className="grid gap-[18px] [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+                {/* auto-FILL, not auto-fit: a group holding a single story
+                    would otherwise stretch it across the full width. */}
+                <div className="grid gap-[18px] [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
                   {group.items.map((story) => (
                     <Link
                       key={story.slug}

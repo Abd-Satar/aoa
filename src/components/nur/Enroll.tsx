@@ -1,8 +1,11 @@
 import { EnrollForm } from "./EnrollForm";
 import { Reveal } from "./Reveal";
-import { contact } from "@/lib/nur-content";
+import { getSettings } from "@/lib/content";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
 
-export function Enroll() {
+export async function Enroll() {
+  const { contact } = await getSettings();
+
   return (
     <section
       id="enroll"
@@ -30,7 +33,7 @@ export function Enroll() {
           card, no obligation.
         </p>
 
-        <EnrollForm />
+        <EnrollForm email={contact.email} connected={isSupabaseConfigured} />
 
         <p className="mt-[14px] mb-0 text-[13px] leading-[22px] text-ink-65">
           Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a> — a

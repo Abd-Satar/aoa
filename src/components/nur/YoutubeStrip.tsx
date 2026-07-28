@@ -1,8 +1,10 @@
 import { YoutubeLogo } from "@phosphor-icons/react/ssr";
 import { Reveal } from "./Reveal";
-import { youtube } from "@/lib/nur-content";
+import { getSettings } from "@/lib/content";
 
-export function YoutubeStrip() {
+export async function YoutubeStrip() {
+  const { youtube } = await getSettings();
+
   return (
     <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[54px]">
       <Reveal className="flex flex-wrap items-baseline gap-x-[18px] gap-y-[10px]">

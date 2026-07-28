@@ -2,10 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Amiri } from "next/font/google";
 import "./globals.css";
 
-import { SiteNav } from "@/components/nur/SiteNav";
-import { SiteFooter } from "@/components/nur/SiteFooter";
-import { PrintPlates } from "@/components/nur/PrintPlates";
-import { ScrollEffects } from "@/components/nur/ScrollEffects";
 import { siteUrl } from "@/lib/nur-content";
 
 // One sans for headings and body. `latin-ext` is not optional here — the
@@ -80,22 +76,18 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
-        {/* The shell is here rather than in each page: four routes were
-            repeating it, and keeping the nav mounted across a client-side
-            navigation stops it re-rendering (and re-measuring) on every
-            route change. No overflow-x on this wrapper — it would become a
-            scroll container and take the sticky masthead with it. */}
-        <div id="top">
-          <SiteNav />
-          {children}
-          <SiteFooter />
-          {/* Filter defs sit outside every section, so no one section's
-              removal can strand the references. */}
-          <PrintPlates />
-          <ScrollEffects />
-        </div>
-      </body>
+      {/* Only the document shell lives here. The marketing chrome (nav,
+          footer, print filters) is in app/(site)/layout.tsx so that /admin
+          can have a completely different frame without inheriting it.
+
+          suppressHydrationWarning: browser extensions inject attributes onto
+          <body> before React hydrates — ColorZilla adds cz-shortcut-listen,
+          Grammarly adds data-gr-ext-installed — and React reports the
+          difference as a hydration mismatch. It only silences attribute
+          differences on <body> itself; genuine mismatches inside the app are
+          still reported. The same attribute on <html> does not cover this,
+          because the flag applies one level deep only. */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

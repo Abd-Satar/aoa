@@ -4,11 +4,12 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/ssr";
 
 import { Reveal } from "@/components/nur/Reveal";
-import { AUDIENCE_LABEL, getStories, getStory } from "@/lib/stories";
+import { AUDIENCE_LABEL } from "@/lib/stories";
+import { getLibraryStories, getLibraryStory } from "@/lib/content";
 
 // Every story is known at build time, so each gets its own static page.
-export function generateStaticParams() {
-  return getStories().map((story) => ({ slug: story.slug }));
+export async function generateStaticParams() {
+  return (await getLibraryStories()).map((story) => ({ slug: story.slug }));
 }
 
 export async function generateMetadata({
@@ -17,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const story = getStory(slug);
+  const story = await getLibraryStory(slug);
   if (!story) return { title: "Story not found — A.O.A" };
   return {
     title: `${story.title} — A.O.A (As-Sattar Online Academy)`,
@@ -31,10 +32,12 @@ export default async function StoryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const story = getStory(slug);
+  const story = await getLibraryStory(slug);
   if (!story) notFound();
 
-  const others = getStories().filter((s) => s.slug !== story.slug);
+  const others = (await getLibraryStories()).filter(
+    (s) => s.slug !== story.slug,
+  );
 
   return (
     <main>
@@ -127,7 +130,7 @@ export default async function StoryPage({
             <span className="mt-8 mb-6 block text-[13px] tracking-[0.08em] text-ink-70 uppercase">
               Read next
             </span>
-            <div className="grid gap-[18px] [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+            <div className="grid gap-[18px] [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]">
               {others.slice(0, 3).map((other) => (
                 <Link
                   key={other.slug}

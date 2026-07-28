@@ -4,7 +4,8 @@ import { ArrowRight } from "@phosphor-icons/react/ssr";
 
 import { PageHeader } from "@/components/nur/PageHeader";
 import { Reveal } from "@/components/nur/Reveal";
-import { contact, faqs, siteUrl } from "@/lib/nur-content";
+import { siteUrl } from "@/lib/nur-content";
+import { getFaqs, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Questions — A.O.A (As-Sattar Online Academy)",
@@ -13,19 +14,22 @@ export const metadata: Metadata = {
   alternates: { canonical: new URL("/faq", siteUrl).toString() },
 };
 
-// Search engines render this as a rich result. It is generated from the same
-// `faqs` array the page renders, so the two cannot disagree.
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
-};
+export default async function FaqPage() {
+  const faqs = await getFaqs();
+  const { contact } = await getSettings();
 
-export default function FaqPage() {
+  // Search engines render this as a rich result. Built from the same data the
+  // page renders, so the two cannot disagree.
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
   return (
     <main>
       <script

@@ -185,9 +185,9 @@ export default function MethodPage() {
               </Link>
               <Link
                 className="btn btn-secondary px-[22px] py-3 text-[15px] no-underline"
-                href="/teachers"
+                href="/#founder"
               >
-                Meet the teachers
+                Meet the founder
               </Link>
             </div>
           </div>

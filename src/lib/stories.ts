@@ -1,5 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
+import { parseStoryBody, type StoryBlock } from "./story-format";
+
+export type { StoryBlock };
 
 /**
  * The story library.
@@ -22,11 +25,6 @@ const STORIES_DIR = path.join(process.cwd(), "content", "stories");
 
 export const AUDIENCES = ["children", "adults", "everyone"] as const;
 export type Audience = (typeof AUDIENCES)[number];
-
-export type StoryBlock =
-  | { kind: "heading"; text: string }
-  | { kind: "paragraph"; text: string }
-  | { kind: "quote"; text: string; cite?: string };
 
 export type Story = {
   slug: string;
@@ -73,44 +71,6 @@ function parseFrontmatter(raw: string): [Record<string, string>, string] {
   return [data, body];
 }
 
-function parseBlocks(body: string): StoryBlock[] {
-  const blocks: StoryBlock[] = [];
-
-  // Paragraphs are separated by a blank line, exactly as in Markdown.
-  for (const chunk of body.split(/\n{2,}/)) {
-    const lines = chunk
-      .split("\n")
-      .map((l) => l.trim())
-      .filter(Boolean);
-    if (!lines.length) continue;
-
-    if (lines[0].startsWith("## ")) {
-      blocks.push({ kind: "heading", text: lines[0].slice(3).trim() });
-      // A heading may be followed by prose in the same chunk.
-      const rest = lines.slice(1).join(" ").trim();
-      if (rest) blocks.push({ kind: "paragraph", text: rest });
-      continue;
-    }
-
-    if (lines[0].startsWith(">")) {
-      const quoteLines = lines
-        .filter((l) => l.startsWith(">"))
-        .map((l) => l.replace(/^>\s?/, "").trim());
-      // A final line opening with an em dash is read as the attribution.
-      let cite: string | undefined;
-      if (quoteLines.length > 1 && /^—/.test(quoteLines[quoteLines.length - 1])) {
-        cite = quoteLines.pop()!.replace(/^—\s*/, "");
-      }
-      blocks.push({ kind: "quote", text: quoteLines.join(" "), cite });
-      continue;
-    }
-
-    blocks.push({ kind: "paragraph", text: lines.join(" ") });
-  }
-
-  return blocks;
-}
-
 function toAudience(value: string | undefined): Audience {
   const v = (value || "").toLowerCase().trim();
   if (v === "children" || v === "kids" || v === "child") return "children";
@@ -128,7 +88,7 @@ function readAll(): Story[] {
   const stories = files.map((file) => {
     const raw = fs.readFileSync(path.join(STORIES_DIR, file), "utf8");
     const [data, body] = parseFrontmatter(raw);
-    const blocks = parseBlocks(body);
+    const blocks = parseStoryBody(body);
 
     const words = blocks.reduce(
       (n, b) => n + b.text.split(/\s+/).filter(Boolean).length,

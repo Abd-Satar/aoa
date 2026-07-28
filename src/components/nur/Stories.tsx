@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react/ssr";
 import { Reveal } from "./Reveal";
-import { stories } from "@/lib/nur-content";
+import type { Story } from "@/lib/nur-content";
 
 // Offset from the hero's clock so the two carousels never turn together.
 const AUTOPLAY_MS = 9000;
 
-export function Stories() {
+// Data arrives as a prop: this is a client component (carousel state), so it
+// cannot read from the database itself. StoriesSection does that.
+export function Stories({ stories }: { stories: Story[] }) {
   const [index, setIndex] = useState(0);
   const count = stories.length;
 

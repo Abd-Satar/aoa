@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/ssr";
 import { Reveal } from "./Reveal";
-import { faqs } from "@/lib/nur-content";
+import { getFaqs } from "@/lib/content";
 
 /**
  * Native <details> rows — no JavaScript, and they stay open for in-page
  * search and print.
  */
-export function Faq() {
+export async function Faq() {
+  const faqs = await getFaqs();
+
   return (
     <section
       id="faq"

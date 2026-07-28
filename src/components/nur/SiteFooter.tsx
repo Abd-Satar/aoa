@@ -4,9 +4,12 @@ import {
   WhatsappLogo,
   YoutubeLogo,
 } from "@phosphor-icons/react/ssr";
-import { contact, footerLinks, youtube } from "@/lib/nur-content";
+import { footerLinks } from "@/lib/nur-content";
+import { getSettings } from "@/lib/content";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const { contact, youtube, instagram } = await getSettings();
+
   return (
     <footer className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-24 pb-14">
       <div className="grid gap-x-10 gap-y-8 text-sm leading-[26px] [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
@@ -47,10 +50,15 @@ export function SiteFooter() {
             {contact.phone}
           </a>
           <div className="mt-2 flex gap-3">
-            {/* TODO: no Instagram handle supplied yet — points at enrolment. */}
-            <Link href="/#enroll" aria-label="Instagram" className="no-underline">
+            <a
+              href={instagram.url}
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram"
+              className="no-underline"
+            >
               <InstagramLogo size={20} weight="duotone" />
-            </Link>
+            </a>
             <a
               href={youtube.url}
               target="_blank"
