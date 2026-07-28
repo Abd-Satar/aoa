@@ -66,13 +66,13 @@ export function Stats() {
   return (
     <section
       ref={ref}
-      className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[104px]"
+      className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(56px,9vw,104px)]"
     >
       <Reveal>
         <span className="mb-[34px] block text-[13px] tracking-[0.08em] text-ink-70 uppercase">
           The academy, in figures
         </span>
-        <div className="grid gap-x-10 gap-y-12 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+        <div className="grid gap-x-10 gap-y-8 sm:gap-y-12 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
           {stats.map((stat, i) => (
             <div key={stat.label}>
               {/* Tabular figures: these count up, and proportional digits

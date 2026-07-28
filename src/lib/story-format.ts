@@ -38,10 +38,15 @@ export function parseStoryBody(body: string): StoryBlock[] {
       const quoteLines = lines
         .filter((l) => l.startsWith(">"))
         .map((l) => l.replace(/^>\s?/, "").trim());
-      // A final line opening with an em dash is read as the attribution.
+      // A final line opening with a dash is read as the attribution. Both a
+      // plain hyphen and an em dash are accepted, so stories written before
+      // the house style dropped em dashes still parse.
       let cite: string | undefined;
-      if (quoteLines.length > 1 && /^—/.test(quoteLines[quoteLines.length - 1])) {
-        cite = quoteLines.pop()!.replace(/^—\s*/, "");
+      if (
+        quoteLines.length > 1 &&
+        /^[-—–]\s/.test(quoteLines[quoteLines.length - 1])
+      ) {
+        cite = quoteLines.pop()!.replace(/^[-—–]\s*/, "");
       }
       blocks.push({ kind: "quote", text: quoteLines.join(" "), cite });
       continue;

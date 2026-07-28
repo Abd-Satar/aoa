@@ -28,7 +28,7 @@ export function Stories({ stories }: { stories: Story[] }) {
   return (
     <section
       id="stories"
-      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[108px]"
+      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[clamp(56px,9vw,108px)]"
     >
       <Reveal>
         <div className="mb-[30px] flex items-end justify-between gap-6">

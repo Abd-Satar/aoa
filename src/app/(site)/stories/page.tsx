@@ -8,7 +8,7 @@ import { AUDIENCES, AUDIENCE_LABEL } from "@/lib/stories";
 import { getLibraryStories } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Stories — A.O.A (As-Sattar Online Academy)",
+  title: "Stories | A.O.A (As-Sattar Online Academy)",
   description:
     "Stories of the prophets and other accounts worth sitting with, for children and for adults. Free to read, no enrolment needed.",
 };
@@ -28,7 +28,7 @@ export default async function StoriesPage() {
       <PageHeader
         eyebrow="Stories"
         title="Stories worth sitting with."
-        intro="Accounts of the prophets and others worth telling, written plainly — some for children, some for adults. Free to read, and no enrolment needed to read them."
+        intro="Accounts of the prophets and others worth telling, written plainly. Some for children, some for adults. Free to read, and no enrolment needed to read them."
         ledger={
           stories.length
             ? [
@@ -109,7 +109,7 @@ export default async function StoriesPage() {
           <div className="flex flex-wrap items-center gap-x-8 gap-y-5 pt-8">
             <p className="m-0 max-w-[46ch] text-[17px] leading-7 text-ink-80">
               These are the stories in translation. Reading them in the language
-              they were revealed in is a different thing altogether — and that is
+              they were revealed in is a different thing altogether, and that is
               what the academy is for.
             </p>
             <Link

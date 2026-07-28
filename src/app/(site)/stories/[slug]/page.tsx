@@ -105,7 +105,7 @@ export default async function StoryPage({
                   </blockquote>
                   {block.cite && (
                     <figcaption className="mt-3 text-[14px] leading-6 text-ink-65">
-                      — {block.cite}
+                      {block.cite}
                     </figcaption>
                   )}
                 </figure>

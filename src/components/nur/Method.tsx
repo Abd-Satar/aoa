@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/ssr";
 import { ImageSlot } from "./ImageSlot";
+import { ReadMore } from "./ReadMore";
 import { Reveal } from "./Reveal";
 
 export function Method() {
   return (
     <section
       id="story"
-      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[104px]"
+      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[clamp(56px,9vw,104px)]"
     >
       <Reveal className="grid items-center gap-x-[clamp(24px,5vw,96px)] gap-y-7 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]">
         <div>
@@ -18,17 +19,21 @@ export function Method() {
             Most people don&rsquo;t stop because it&rsquo;s hard. They stop
             because nobody noticed.
           </h2>
-          <p className="mt-5 mb-0 max-w-[48ch] text-justify text-[15.5px] leading-7 text-ink-78 hyphens-auto">
-            A.O.A began in 2014 with one teacher and a handful of students,
+          {/* Ranged left on phones. Justified text needs a comfortable
+              measure to avoid rivers, and a 350px column does not have one. */}
+          <p className="mt-5 mb-0 max-w-[48ch] text-[15.5px] leading-7 text-ink-78 sm:text-justify sm:hyphens-auto">
+            A.O.A began in 2015 with one teacher and a handful of students,
             most of whom had already given up once. What kept them was not a
             better app. It was a named person, at a fixed hour, who asked where
             you got to and remembered the answer.
           </p>
-          <p className="mt-4 mb-0 max-w-[48ch] text-justify text-[15.5px] leading-7 text-ink-78 hyphens-auto">
-            That is still the whole method. A syllabus you can see the end of, a
-            teacher who does not rotate, and a written record of every session so
-            that progress is a fact rather than a feeling.
-          </p>
+          <ReadMore more="Read the rest" less="Show less">
+            <p className="mt-4 mb-0 max-w-[48ch] text-[15.5px] leading-7 text-ink-78 sm:text-justify sm:hyphens-auto">
+              That is still the whole method. A syllabus you can see the end of,
+              a teacher who does not rotate, and a written record of every
+              session so that progress is a fact rather than a feeling.
+            </p>
+          </ReadMore>
           <Link className="btn btn-ghost mt-[18px] text-[15px] no-underline" href="/method">
             How a track runs <ArrowRight size={15} weight="duotone" />
           </Link>

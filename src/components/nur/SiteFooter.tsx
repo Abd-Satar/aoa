@@ -5,6 +5,7 @@ import {
   YoutubeLogo,
 } from "@phosphor-icons/react/ssr";
 import { footerLinks } from "@/lib/nur-content";
+import { legalDocs } from "@/lib/legal";
 import { getSettings } from "@/lib/content";
 
 export async function SiteFooter() {
@@ -22,7 +23,7 @@ export async function SiteFooter() {
           </p>
           <p className="mt-2.5 mb-0 max-w-[26ch] text-ink-65">
             Qur&rsquo;an, Arabic and Islamic studies, taught live in English,
-            Arabic and Yoruba since 2014.
+            Arabic and Yoruba, in person since 2015 and online since 2021.
           </p>
         </div>
 
@@ -85,17 +86,12 @@ export async function SiteFooter() {
 
       <div className="flex flex-wrap justify-between gap-x-6 gap-y-2 text-[12.5px] text-ink-60">
         <span>© 2026 As-Sattar Online Academy. All rights reserved.</span>
-        {/* TODO: these three pages do not exist yet. */}
         <span className="flex gap-5">
-          <Link href="/#enroll" className="no-underline">
-            Privacy
-          </Link>
-          <Link href="/#enroll" className="no-underline">
-            Terms
-          </Link>
-          <Link href="/#enroll" className="no-underline">
-            Refunds
-          </Link>
+          {legalDocs.map((doc) => (
+            <Link key={doc.slug} href={`/${doc.slug}`} className="no-underline">
+              {doc.navLabel}
+            </Link>
+          ))}
         </span>
       </div>
     </footer>

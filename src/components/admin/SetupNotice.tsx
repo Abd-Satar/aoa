@@ -81,7 +81,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...`}</code>
               <strong>Authentication → Users → Add user</strong> (tick “Auto
               Confirm User”), then run the <code>insert into public.admins</code>{" "}
               statement at the bottom of the schema file with your email in it.
-              Signing in is not enough on its own — that row is what grants
+              Signing in is not enough on its own. That row is what grants
               editing rights.
             </p>
           </div>

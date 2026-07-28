@@ -6,7 +6,7 @@ export async function YoutubeStrip() {
   const { youtube } = await getSettings();
 
   return (
-    <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[54px]">
+    <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(36px,5vw,54px)]">
       <Reveal className="flex flex-wrap items-baseline gap-x-[18px] gap-y-[10px]">
         <YoutubeLogo size={26} weight="duotone" className="text-accent" />
         <p className="m-0 max-w-[52ch] text-[17px] leading-7 text-ink-80">

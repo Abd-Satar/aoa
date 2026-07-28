@@ -23,16 +23,16 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: "nur-hero-2",
-    kicker: "Licensed to teach",
-    title: "Every recitation teacher holds an ijāzah",
-    body: "An unbroken chain of transmission back to the Prophet ﷺ — verified, documented, and printed on the certificate you receive at the end of your track.",
+    kicker: "Properly trained",
+    title: "Taught by someone who studied it, at length",
+    body: "Years at Markaz Ṣalāḥud-Dīn, Markaz Hudā ar-Raḥmān and Maʿhad al-Iftāʾ wa an-Najāh, then Al-Azhar in Cairo. Every institution is named, and you may ask about any of them before you enrol.",
     placeholder: "Drop a photo: a teacher with a muṣḥaf",
   },
   {
     id: "nur-hero-3",
     kicker: "For the children",
     title: "Twenty-five minutes, twice a week, finished",
-    body: "Short sessions built around a child's attention, not an adult's calendar — with a weekly note home so parents can see exactly what was read.",
+    body: "Short sessions built around a child's attention, not an adult's calendar, with a weekly note home so parents can see exactly what was read.",
     placeholder: "Drop a photo: a child reading at a desk",
   },
 ];
@@ -57,13 +57,13 @@ export const ledger: { label: string; value: string; accent?: boolean }[] = [
 export const principles = [
   {
     icon: "link" as const,
-    title: "Taught by chain, not by video",
-    body: "Recitation cannot be learned from a recording — it is heard, imitated and corrected. Every session is live, and every correction comes from a teacher whose own licence is documented back through named students to the Prophet ﷺ.",
+    title: "Taught live, not from a recording",
+    body: "Recitation cannot be learned from a video. It is heard, imitated and corrected. Every session is live, so a mistake is caught in the moment rather than practised until it sets. You are corrected by a person who is listening to you, not to a class of fifty.",
   },
   {
     icon: "users" as const,
     title: "Five students, never fifty",
-    body: "Circles cap at five, and one-to-one is the default for ḥifẓ. You read aloud in every session — not once a month when the queue reaches you. Your teacher stays yours for the whole track.",
+    body: "Circles cap at five, and one-to-one is the default for ḥifẓ. You read aloud in every session, not once a month when the queue reaches you. Your teacher stays yours for the whole track.",
   },
   {
     icon: "calendar" as const,
@@ -76,7 +76,7 @@ export const programs = [
   {
     kicker: "Recitation",
     title: "Tajwīd, from the letters up",
-    body: "Makhārij, ṣifāt and the rules of stopping — until the page reads correctly without you thinking about it.",
+    body: "Makhārij, ṣifāt and the rules of stopping, until the page reads correctly without you thinking about it.",
     meta: "Beginner → advanced · 9 months · adults & children",
   },
   {
@@ -94,7 +94,7 @@ export const programs = [
   {
     kicker: "Language",
     title: "Classical Arabic, full grammar",
-    body: "Naḥw and ṣarf on the classical texts — Ājurrūmiyyah through to reading tafsīr unaided. The long road, properly walked.",
+    body: "Naḥw and ṣarf on the classical texts, from Ājurrūmiyyah through to reading tafsīr unaided. The long road, properly walked.",
     meta: "Intermediate → advanced · 2 years",
   },
   {
@@ -106,13 +106,13 @@ export const programs = [
   {
     kicker: "Language",
     title: "Yoruba, spoken and written",
-    body: "The written standard — tone marks, orthography and the vocabulary of the dīn — so the language of home can carry the lesson too.",
+    body: "The written standard: tone marks, orthography and the vocabulary of the dīn, so the language of home can carry the lesson too.",
     meta: "All levels · 8 months · adults & children",
   },
   {
     kicker: "Children",
     title: "Kids' Foundations, ages 6–12",
-    body: "Nūrānī Qāʿidah, short sūrahs and the daily duʿāʾs — twenty-five minutes at a time, with a note home each week.",
+    body: "Nūrānī Qāʿidah, short sūrahs and the daily duʿāʾs, twenty-five minutes at a time, with a note home each week.",
     meta: "Twice weekly · ongoing · parent report",
   },
 ];
@@ -120,7 +120,7 @@ export const programs = [
 export const ayah = {
   arabic: "وَلَقَدْ يَسَّرْنَا ٱلْقُرْءَانَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ",
   text: "“And We have certainly made the Qur'an easy to remember. So is there any who will remember?”",
-  source: "— Sūrat al-Qamar, 54:17",
+  source: "Sūrat al-Qamar, 54:17",
 };
 
 // Canonical URLs only. The links these came from carried share-tracking
@@ -128,7 +128,7 @@ export const ayah = {
 // generated per share, tell the platform where the click came from, and add
 // nothing for a visitor — so they are stripped.
 export const youtube = {
-  text: "Every Friday our teachers publish a short tafsīr of one page — free, no enrolment needed.",
+  text: "Every Friday our teachers publish a short tafsīr of one page. Free, no enrolment needed.",
   label: "Watch the weekly series",
   url: "https://youtube.com/@satarmoyosore6147",
 };
@@ -148,15 +148,15 @@ export type Stat = {
 // or a stated policy — nothing here is a performance claim.
 export const stats: Stat[] = [
   {
-    to: 28,
+    to: 11,
     suffix: "",
-    label: "links in the chain behind our recitation licence",
+    label: "years teaching: in person since 2015, online since 2021",
   },
   { to: 7, suffix: "", label: "tracks, each with a fixed syllabus and an end" },
   {
     to: 5,
     suffix: "",
-    label: "students at most in a circle — one-to-one for ḥifẓ",
+    label: "students at most in a circle, and one-to-one for ḥifẓ",
   },
   {
     to: 3,
@@ -176,14 +176,14 @@ export const stats: Stat[] = [
 export const founder = {
   name: "Ustaz AbdSattar Abdul Moyosore",
   title: "Founder & Proprietor",
-  placeholder: "Portrait — Ustaz AbdSattar Abdul Moyosore",
+  placeholder: "Portrait: Ustaz AbdSattar Abdul Moyosore",
   /** Drop a file in /public and set this to e.g. "/founder.jpg". */
   image: undefined as string | undefined,
   credentials: [
     "Al-Azhar University, Cairo",
-    "Maʿhad al-Iftāʾ wa an-Najāh — Iʿdādiyyah & Thānawiyyah",
-    "Markaz Hudā ar-Raḥmān — Arabic & Islamic studies",
-    "Markaz Ṣalāḥud-Dīn — Walīmah",
+    "Maʿhad al-Iftāʾ wa an-Najāh: Iʿdādiyyah & Thānawiyyah",
+    "Markaz Hudā ar-Raḥmān: Arabic & Islamic studies",
+    "Markaz Ṣalāḥud-Dīn: Walīmah",
     "Teaching since 2015 · online since 2021",
   ],
   body: [
@@ -210,7 +210,7 @@ export const methodSteps = [
   },
   {
     title: "Placed where you actually are",
-    body: "The assessment decides your starting point — not a form, and not the level the syllabus would prefer you were at. Roughly half of the people who begin with us start at the letters, adults included.",
+    body: "The assessment decides your starting point, not a form, and not the level the syllabus would prefer you were at. Roughly half of the people who begin with us start at the letters, adults included.",
   },
   {
     title: "A named teacher, for the whole track",
@@ -222,7 +222,7 @@ export const methodSteps = [
   },
   {
     title: "A written record, every session",
-    body: "What was read, what was corrected, and what comes next — written down after each class. For children a note goes home each week, so progress is a fact you can read rather than a feeling.",
+    body: "What was read, what was corrected, and what comes next, written down after each class. For children a note goes home each week, so progress is a fact you can read rather than a feeling.",
   },
   {
     title: "An end, and a certificate",
@@ -253,7 +253,7 @@ export const methodSchedule = [
   "Slots from five in the morning to midnight, across every timezone we teach in.",
   "Reschedule up to four hours before a session at no cost.",
   "Beyond that, unused lessons bank for sixty days.",
-  "Ramadan and travel pauses are free and unlimited — just tell your teacher.",
+  "Ramadan and travel pauses are free and unlimited. Just tell your teacher.",
 ];
 
 export type Story = { quote: string; source: string };
@@ -274,11 +274,11 @@ export const stories: Story[] = [];
 export const faqs = [
   {
     q: "Do I need any Arabic to start?",
-    a: "None. Many students begin at the alphabet, adults included. The first lesson is an assessment, and you are placed where you actually are — not where the syllabus wishes you were.",
+    a: "None. Many students begin at the alphabet, adults included. The first lesson is an assessment, and you are placed where you actually are, not where the syllabus wishes you were.",
   },
   {
     q: "Which languages are classes taught in?",
-    a: "English, Arabic and Yoruba. Tell admissions which you are most comfortable in and we will match you to a teacher who can teach in it — the Qur'an itself is always read in Arabic, but the explanation around it does not have to be.",
+    a: "English, Arabic and Yoruba. Tell admissions which you are most comfortable in and we will match you to a teacher who can teach in it. The Qur'an itself is always read in Arabic, but the explanation around it does not have to be.",
   },
   {
     q: "Can my child and I both enroll?",
@@ -290,11 +290,11 @@ export const faqs = [
   },
   {
     q: "What if I miss a week?",
-    a: "Reschedule up to four hours before a session at no cost. Beyond that, unused lessons bank for sixty days. Ramadan and travel pauses are free and unlimited — just tell your teacher.",
+    a: "Reschedule up to four hours before a session at no cost. Beyond that, unused lessons bank for sixty days. Ramadan and travel pauses are free and unlimited. Just tell your teacher.",
   },
   {
-    q: "How is the ijāzah verified?",
-    a: "Every teacher is named on the site with the institutions that trained them. If you want to see the certificate itself, or the names in the chain a licence runs through, ask admissions and we will send them to you.",
+    q: "What are your teacher's qualifications?",
+    a: "Every teacher is named on the site along with the institutions that trained them. For the founder that is Markaz Ṣalāḥud-Dīn, Markaz Hudā ar-Raḥmān, Maʿhad al-Iftāʾ wa an-Najāh and Al-Azhar University in Cairo. We do not claim an ijāzah, because none is formally held. If you want the detail of any of it, ask admissions. The first lesson is free precisely so you can judge the teaching for yourself rather than take our word for it.",
   },
 ];
 
@@ -329,6 +329,9 @@ export const routes = [
   "/method",
   "/stories",
   "/testimonials",
+  "/privacy",
+  "/terms",
+  "/refunds",
   "/faq",
 ] as const;
 

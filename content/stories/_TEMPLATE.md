@@ -9,7 +9,7 @@ draft: true
 
 ## An optional section heading
 
-Write the story in ordinary paragraphs. Leave a blank line between them —
+Write the story in ordinary paragraphs. Leave a blank line between them.
 that is what separates one paragraph from the next. A single line break
 inside a paragraph is fine and will not split it.
 
@@ -20,7 +20,7 @@ and Arabic all work as typed: Qur'an, ﷺ, Ḥafṣ ʿan ʿĀṣim, وَلَقَ
 
 > Set an āyah or a line worth pausing on as a quote by starting the line
 > with a greater-than sign.
-> — Sūrat al-Qamar, 54:17
+> - Sūrat al-Qamar, 54:17
 
 Then carry on with ordinary paragraphs.
 
@@ -48,11 +48,11 @@ HOW TO ADD A STORY
 
 3. Write the story underneath. Only three things are special:
        ## Heading      a section heading
-       > Quoted line   a pull quote (a final line starting with — is the
+       > Quoted line   a pull quote (a final line starting with - is the
                        attribution)
        blank line      separates paragraphs
 
-4. Save. The dev server picks it up on refresh. Nothing else to do —
+4. Save. The dev server picks it up on refresh. Nothing else to do.
    no code to edit, no list to update.
 
 Files whose name starts with an underscore, like this one, are ignored.

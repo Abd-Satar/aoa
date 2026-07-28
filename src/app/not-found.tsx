@@ -4,7 +4,7 @@ import { ArrowRight } from "@phosphor-icons/react/ssr";
 import { navLinks } from "@/lib/nur-content";
 
 export const metadata: Metadata = {
-  title: "Page not found — A.O.A (As-Sattar Online Academy)",
+  title: "Page not found | A.O.A (As-Sattar Online Academy)",
 };
 
 // Lives inside app/, so it inherits the masthead and footer from the layout

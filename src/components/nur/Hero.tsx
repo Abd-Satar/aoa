@@ -4,7 +4,7 @@ import { ledger, marqueeFacts } from "@/lib/nur-content";
 
 export function Hero() {
   return (
-    <section className="relative mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[76px]">
+    <section className="relative mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(36px,7vw,76px)]">
       {/* Two soft plates of ground color that drift on their own clock. */}
       <div
         aria-hidden="true"
@@ -32,10 +32,9 @@ export function Hero() {
         </h1>
         <p className="mt-[34px] mb-0 max-w-[56ch] text-[17.5px] leading-7 text-ink-82">
           Live classes in recitation, classical Arabic, Yoruba and Islamic
-          studies — for adults and for children. Taught in English, Arabic and
-          Yoruba, one-to-one or in circles of five, by teachers who hold a
-          licence to teach it, on a timetable that fits the week you actually
-          have.
+          studies, for adults and for children. Taught in English, Arabic and
+          Yoruba, one-to-one or in circles of five, by a teacher who studied it
+          properly, on a timetable that fits the week you actually have.
         </p>
         <div className="mt-[30px] flex flex-wrap items-center gap-[14px]">
           <a className="btn btn-primary px-[22px] py-3 text-[15px] no-underline" href="#enroll">
@@ -57,9 +56,9 @@ export function Hero() {
         <HeroCarousel />
       </Reveal>
 
-      {/* The ledger — a rule, a run of facts, then dot-leadered figures.
+      {/* The ledger: a rule, a run of facts, then dot-leadered figures.
           Straight out of the broadsheet's front page. */}
-      <Reveal className="pt-[78px]">
+      <Reveal className="pt-[clamp(44px,7vw,78px)]">
         <hr className="m-0 h-[5px] border-0 border-t-2 border-b border-text" />
         <p className="m-0 flex flex-wrap justify-between gap-x-7 gap-y-[14px] py-[14px] text-[13px] leading-[14px] tracking-[0.08em] text-ink-70 uppercase">
           {marqueeFacts.map((fact) => (

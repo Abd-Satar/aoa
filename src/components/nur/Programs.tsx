@@ -9,7 +9,7 @@ export async function Programs() {
   return (
     <section
       id="programs"
-      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-24"
+      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[clamp(52px,8vw,96px)]"
     >
       <Reveal className="flex flex-wrap items-end justify-between gap-7">
         <div>
@@ -22,7 +22,7 @@ export async function Programs() {
         </div>
         <div>
           <p className="m-0 max-w-[40ch] text-[15.5px] leading-7 text-ink-78">
-            Each track has a fixed syllabus, a named teacher and an end — a
+            Each track has a fixed syllabus, a named teacher and an end: a
             certificate, not a subscription that runs forever.
           </p>
           <Link className="btn btn-ghost mt-4 text-[15px] no-underline" href="/programs">
@@ -31,15 +31,15 @@ export async function Programs() {
         </div>
       </Reveal>
 
-      <Reveal className="mt-11 grid gap-[18px] [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+      <Reveal className="mt-[clamp(28px,4vw,44px)] grid gap-[14px] sm:gap-[18px] [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
         {programs.map((program) => (
           /* The hover is a press metaphor rather than a UI one: a rule inks
              across the head of the card, the sheet lifts a little, and the
              title takes the accent. Everything eases on the same curve and
-             the card never scales — scaling resamples the type. */
+             the card never scales, since scaling resamples the type. */
           <article
             key={program.title}
-            className="card group relative isolate gap-[10px] overflow-hidden p-[26px] transition-[transform,box-shadow,background] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[5px] hover:shadow-lg"
+            className="card group relative isolate gap-[8px] overflow-hidden p-[18px] transition-[transform,box-shadow,background] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[5px] hover:shadow-lg sm:gap-[10px] sm:p-[26px]"
           >
             <span
               aria-hidden="true"
@@ -54,13 +54,18 @@ export async function Programs() {
               {program.title}
             </h3>
 
-            <p className="card-body text-sm leading-6">{program.body}</p>
+            {/* On phones the seven cards ran to nearly 2,000px, most of it
+                description. The title and the details line identify a track
+                well enough to choose one; the descriptions stay on /programs,
+                one tap away via "All programs" below. */}
+            <p className="card-body hidden text-sm leading-6 sm:block">
+              {program.body}
+            </p>
 
-            {/* No arrow here on purpose. These cards are not links — the
-                only way onward is "All programs" above — and an arrow that
-                appears on hover promises a destination the card does not
-                have. The rule, the lift and the accent are the whole
-                effect. */}
+            {/* No arrow here on purpose. These cards are not links, the only
+                way onward is "All programs" above, and an arrow that appears
+                on hover promises a destination the card does not have. The
+                rule, the lift and the accent are the whole effect. */}
             <p className="card-meta mt-1.5 mb-0">{program.meta}</p>
           </article>
         ))}

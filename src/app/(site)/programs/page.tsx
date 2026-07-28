@@ -7,9 +7,9 @@ import { Reveal } from "@/components/nur/Reveal";
 import { getPrograms } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Programs — A.O.A (As-Sattar Online Academy)",
+  title: "Programs | A.O.A (As-Sattar Online Academy)",
   description:
-    "Seven tracks at A.O.A — As-Sattar Online Academy: Tajwīd, Ḥifẓ, Qur'anic Arabic, Classical Arabic, ʿAqīdah/Fiqh/Sīrah, Yoruba, and Kids' Foundations. Each with a fixed syllabus, a named teacher and an end.",
+    "Seven tracks at A.O.A (As-Sattar Online Academy): Tajwīd, Ḥifẓ, Qur'anic Arabic, Classical Arabic, ʿAqīdah/Fiqh/Sīrah, Yoruba, and Kids' Foundations. Each with a fixed syllabus, a named teacher and an end.",
 };
 
 // The tracks grouped by their kicker, in first-appearance order, so the page
@@ -35,7 +35,7 @@ export default async function ProgramsPage() {
       <PageHeader
         eyebrow="Programs"
         title="Seven tracks. One of them is yours."
-        intro="Each track has a fixed syllabus, a named teacher and an end — a certificate, not a subscription that runs forever. You are placed by assessment, not by the level you say you are."
+        intro="Each track has a fixed syllabus, a named teacher and an end: a certificate, not a subscription that runs forever. You are placed by assessment, not by the level you say you are."
         ledger={[
           { label: "Tracks running", value: String(programs.length) },
           { label: "Students per circle, at most", value: "5" },
@@ -102,8 +102,8 @@ export default async function ProgramsPage() {
             <div>
               <p className="m-0 max-w-[52ch] text-[15.5px] leading-7 text-ink-78">
                 Then don&rsquo;t choose. The first lesson is an assessment: a
-                teacher listens to you read — or starts you at the alphabet if
-                that is where you are — and tells you honestly which track fits.
+                teacher listens to you read, or starts you at the alphabet if
+                that is where you are, and tells you honestly which track fits.
                 It costs nothing and commits you to nothing.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-[14px]">

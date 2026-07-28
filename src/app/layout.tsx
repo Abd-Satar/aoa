@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   // social scrapers cannot resolve them.
   metadataBase: new URL(siteUrl),
   title:
-    "A.O.A — As-Sattar Online Academy | Learn the Qur'an in its own language",
+    "A.O.A | As-Sattar Online Academy | Learn the Qur'an in its own language",
   description:
-    "Live classes in recitation, classical Arabic, Yoruba and Islamic studies — for adults and for children. Taught in English, Arabic and Yoruba, one-to-one or in circles of five, by teachers who hold a licence to teach it.",
+    "Live classes in recitation, classical Arabic, Yoruba and Islamic studies, for adults and for children. Taught in English, Arabic and Yoruba, one-to-one or in circles of five, by a teacher trained at Al-Azhar and the traditional maʿāhid.",
   keywords: [
     "quran classes online",
     "as-sattar online academy",
@@ -40,13 +40,13 @@ export const metadata: Metadata = {
     "yoruba classes online",
     "quran classes in yoruba",
     "islamic studies",
-    "ijazah",
+    "al-azhar",
     "quran for kids",
   ],
   openGraph: {
-    title: "A.O.A — As-Sattar Online Academy | Learn the Qur'an in its own language",
+    title: "A.O.A | As-Sattar Online Academy | Learn the Qur'an in its own language",
     description:
-      "Live classes in recitation, classical Arabic and Islamic studies, taught by teachers who hold an ijāzah. First lesson free.",
+      "Live classes in recitation, classical Arabic and Islamic studies, taught by a teacher trained at Al-Azhar and the traditional maʿāhid. First lesson free.",
     type: "website",
   },
 };

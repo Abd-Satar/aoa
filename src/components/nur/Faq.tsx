@@ -13,7 +13,7 @@ export async function Faq() {
   return (
     <section
       id="faq"
-      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[108px]"
+      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[clamp(56px,9vw,108px)]"
     >
       <Reveal className="grid gap-x-[clamp(24px,5vw,80px)] gap-y-7 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))]">
         <div>

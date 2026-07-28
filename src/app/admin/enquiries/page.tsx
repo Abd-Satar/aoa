@@ -41,7 +41,7 @@ export default async function EnquiriesPage() {
           {/enquiries/i.test(error.message) && (
             <>
               {" "}
-              Re-run <code>supabase/schema.sql</code> — this table was added
+              Re-run <code>supabase/schema.sql</code>. This table was added
               after you first ran it.
             </>
           )}
@@ -50,9 +50,7 @@ export default async function EnquiriesPage() {
 
       {!error && rows.length === 0 && (
         <div className="rounded-lg border border-dashed border-divider px-6 py-12 text-center">
-          <p className="m-0 text-[15.5px] text-ink-78">
-            No enquiries yet.
-          </p>
+          <p className="m-0 text-[15.5px] text-ink-78">No enquiries yet.</p>
         </div>
       )}
 

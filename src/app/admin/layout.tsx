@@ -8,7 +8,7 @@ import { SetupNotice } from "@/components/admin/SetupNotice";
 import { AdminNav } from "@/components/admin/AdminNav";
 
 export const metadata: Metadata = {
-  title: "Admin — A.O.A",
+  title: "Admin | A.O.A",
   // Belt and braces alongside the proxy guard: never let this be indexed.
   robots: { index: false, follow: false },
 };
@@ -28,7 +28,7 @@ export default async function AdminLayout({
   const admin = await getAdminUser();
 
   // The login page renders inside this layout, so it cannot require a user.
-  // Everything else does — see the guard in each page's own check below.
+  // Everything else does, and checks for itself.
   if (!admin) {
     return <div className="min-h-screen bg-bg">{children}</div>;
   }

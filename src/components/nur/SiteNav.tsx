@@ -32,6 +32,7 @@ export function SiteNav() {
   const [active, setActive] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -99,15 +100,20 @@ export function SiteNav() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
     };
-    // Resizing up to the desktop layout leaves the panel orphaned otherwise.
+    // Resizing up to the desktop layout leaves the drawer orphaned otherwise.
     const mq = matchMedia("(min-width: 1024px)");
     const onWide = () => mq.matches && setMenuOpen(false);
 
-    // Hold the page still behind the panel. overflow-y only: the x axis is
+    // Hold the page still behind the drawer. overflow-y only: the x axis is
     // `clip` in globals.css to stop the decorative plates being draggable,
     // and a blanket `hidden` here would undo that.
     const previous = document.body.style.overflowY;
     document.body.style.overflowY = "hidden";
+
+    // Move focus into the drawer so the keyboard follows the eye, and
+    // remember where it came from.
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
 
     addEventListener("keydown", onKey);
     mq.addEventListener("change", onWide);
@@ -115,6 +121,7 @@ export function SiteNav() {
       removeEventListener("keydown", onKey);
       mq.removeEventListener("change", onWide);
       document.body.style.overflowY = previous;
+      opener?.focus?.();
     };
   }, [menuOpen]);
 
@@ -150,6 +157,7 @@ export function SiteNav() {
     }`;
 
   return (
+    <>
     <nav
       ref={navRef}
       className="sticky top-0 z-40 border-b-2 border-text backdrop-blur-[14px] backdrop-saturate-[1.35] transition-[background] duration-300"
@@ -251,50 +259,114 @@ export function SiteNav() {
             type="button"
             aria-expanded={menuOpen}
             aria-controls="site-menu"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Open menu"
+            onClick={() => setMenuOpen(true)}
             className="btn btn-secondary btn-icon"
           >
-            {menuOpen ? (
-              <X size={18} weight="bold" />
-            ) : (
-              <List size={18} weight="bold" />
-            )}
+            <List size={18} weight="bold" />
           </button>
         </div>
       </div>
+    </nav>
 
-      {/* The panel. Rendered inside the sticky nav so it hangs off the bar,
-          and scrollable in its own right in case a short phone in landscape
-          cannot show every entry. */}
+    {/* ------------------------------------------------------------------
+        The drawer.
+        A SIBLING of <nav>, not a child. The masthead carries a
+        backdrop-filter, and a filtered element becomes the containing
+        block for its fixed-position descendants — inside it, `fixed`
+        would resolve against the bar rather than the viewport and the
+        drawer would be trapped in a 72px-tall strip.
+
+        Kept mounted so it can animate both ways, and made `inert` while
+        closed so its links are not tabbable or reachable by a screen
+        reader behind the page.
+        ------------------------------------------------------------------ */}
+    <div
+      className="fixed inset-0 z-50 lg:hidden"
+      // The wrapper must not swallow taps when the drawer is shut.
+      style={{ pointerEvents: menuOpen ? "auto" : "none" }}
+      // `inert` (a real boolean prop in React 19) takes the whole drawer out
+      // of the tab order and the accessibility tree while it is closed.
+      // Without it the links stay tabbable off-screen, and a keyboard user
+      // tabs into a menu they cannot see.
+      inert={!menuOpen}
+    >
+      {/* Backdrop. Fades the page back rather than hiding it, so you keep
+          your bearings. */}
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-label="Close menu"
+        onClick={() => setMenuOpen(false)}
+        className={`absolute inset-0 h-full w-full cursor-default border-0 bg-text/45 backdrop-blur-[2px] transition-opacity duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          menuOpen ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
       <div
         id="site-menu"
-        hidden={!menuOpen}
-        className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-divider lg:hidden"
-        style={{ paddingInline: "clamp(20px,5vw,72px)" }}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        className={`absolute inset-y-0 right-0 flex w-[min(320px,86vw)] flex-col border-l-2 border-text bg-bg shadow-lg transition-transform duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
-        <ul className="m-0 list-none p-0 py-2">
-          {navLinks.map((link) => (
-            <li key={link.label} className="border-b border-divider last:border-b-0">
-              <Link
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                aria-current={isCurrent(link.href) ? "page" : undefined}
-                className={`block py-3.5 text-[17px] ${mobileLink(isCurrent(link.href))}`}
+        <div className="flex items-center justify-between border-b border-divider px-6 py-[18px]">
+          <span className="font-heading text-[15px] leading-none font-semibold tracking-[0.1em] uppercase">
+            Menu
+          </span>
+          <button
+            ref={closeRef}
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+            className="btn btn-secondary btn-icon"
+          >
+            <X size={18} weight="bold" />
+          </button>
+        </div>
+
+        <nav aria-label="Site" className="flex-1 overflow-y-auto px-6">
+          <ul className="m-0 list-none p-0">
+            {navLinks.map((link, i) => (
+              <li
+                key={link.label}
+                className="border-b border-divider last:border-b-0"
               >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link
-          href="/#enroll"
-          onClick={() => setMenuOpen(false)}
-          className="btn btn-primary mt-3 mb-5 w-full justify-center py-3 text-[16px] no-underline"
-        >
-          Enroll now
-        </Link>
+                <Link
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  // The entries stagger in behind the panel — 40ms apart,
+                  // only on the way in, so closing stays instant.
+                  style={{
+                    transitionDelay: menuOpen ? `${120 + i * 40}ms` : "0ms",
+                  }}
+                  className={`block py-4 text-[17px] transition-[opacity,transform,color,text-decoration-color] duration-[380ms] ${
+                    menuOpen
+                      ? "translate-x-0 opacity-100"
+                      : "translate-x-3 opacity-0"
+                  } ${mobileLink(isCurrent(link.href))}`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="border-t border-divider px-6 py-5">
+          <Link
+            href="/#enroll"
+            onClick={() => setMenuOpen(false)}
+            className="btn btn-primary w-full justify-center py-3 text-[16px] no-underline"
+          >
+            Enroll now
+          </Link>
+        </div>
       </div>
-    </nav>
+    </div>
+    </>
   );
 }

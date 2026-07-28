@@ -107,7 +107,7 @@ export function HeroCarousel() {
 
   return (
     <div
-      className="mt-[66px]"
+      className="mt-[clamp(36px,6vw,66px)]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}

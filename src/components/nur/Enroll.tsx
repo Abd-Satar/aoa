@@ -9,7 +9,7 @@ export async function Enroll() {
   return (
     <section
       id="enroll"
-      className="relative mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[118px]"
+      className="relative mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[clamp(60px,9vw,118px)]"
     >
       <div
         aria-hidden="true"
@@ -36,7 +36,7 @@ export async function Enroll() {
         <EnrollForm email={contact.email} connected={isSupabaseConfigured} />
 
         <p className="mt-[14px] mb-0 text-[13px] leading-[22px] text-ink-65">
-          Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a> — a
+          Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a>. A
           person answers, usually within a day.
         </p>
       </Reveal>

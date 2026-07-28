@@ -13,7 +13,7 @@ import {
 } from "@/lib/nur-content";
 
 export const metadata: Metadata = {
-  title: "Our method — A.O.A (As-Sattar Online Academy)",
+  title: "Our method | A.O.A (As-Sattar Online Academy)",
   description:
     "How a track runs at A.O.A: a free assessment, an honest placement, a named teacher who does not rotate, live sessions of five or one-to-one, a written record of every class, and a syllabus with an end.",
 };
@@ -32,7 +32,7 @@ export default function MethodPage() {
         ]}
       />
 
-      {/* The origin, paired with a figure — the same beat as the home page's
+      {/* The origin, paired with a figure: the same beat as the home page's
           method section, given room. */}
       <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[88px]">
         <Reveal className="grid items-center gap-x-[clamp(24px,5vw,96px)] gap-y-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]">
@@ -40,13 +40,13 @@ export default function MethodPage() {
             <h2 className="m-0 max-w-[20ch] text-[clamp(28px,3.2vw,40px)] leading-[1.14]">
               It started with people who had already given up once.
             </h2>
-            <p className="mt-6 mb-0 max-w-[50ch] text-justify text-[15.5px] leading-7 text-ink-78 hyphens-auto">
-              A.O.A began in 2014 with one teacher and a handful of students,
+            <p className="mt-6 mb-0 max-w-[50ch] text-[15.5px] leading-7 text-ink-78 sm:text-justify sm:hyphens-auto">
+              A.O.A began in 2015 with one teacher and a handful of students,
               most of whom had tried before and stopped. What kept them was not
               a better app. It was a named person, at a fixed hour, who asked
               where you got to and remembered the answer.
             </p>
-            <p className="mt-4 mb-0 max-w-[50ch] text-justify text-[15.5px] leading-7 text-ink-78 hyphens-auto">
+            <p className="mt-4 mb-0 max-w-[50ch] text-[15.5px] leading-7 text-ink-78 sm:text-justify sm:hyphens-auto">
               That is still the whole method. A syllabus you can see the end of,
               a teacher who does not rotate, and a written record of every
               session so that progress is a fact rather than a feeling.
@@ -63,7 +63,7 @@ export default function MethodPage() {
         </Reveal>
       </section>
 
-      {/* How a track runs — the sequence, numbered as folios. */}
+      {/* How a track runs, numbered as folios. */}
       <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(72px,9vw,112px)]">
         <Reveal>
           <span className="mb-3 block text-[13px] tracking-[0.08em] text-ink-70 uppercase">
@@ -102,11 +102,11 @@ export default function MethodPage() {
           <span className="mb-[14px] block text-[13px] tracking-[0.08em] text-ink-70 uppercase">
             What makes an A.O.A class
           </span>
-          <div className="grid gap-x-[clamp(28px,4vw,64px)] gap-y-[42px] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+          <div className="grid gap-x-[clamp(28px,4vw,64px)] gap-y-[28px] sm:gap-y-[42px] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
             {principles.map((item) => (
               <div key={item.title}>
                 <h3 className="mt-0 mb-0 text-2xl leading-7">{item.title}</h3>
-                <p className="mt-[14px] mb-0 text-justify text-[15.5px] leading-7 text-ink-78 hyphens-auto">
+                <p className="mt-[14px] mb-0 text-[15.5px] leading-7 text-ink-78 sm:text-justify sm:hyphens-auto">
                   {item.body}
                 </p>
               </div>
@@ -115,7 +115,7 @@ export default function MethodPage() {
         </Reveal>
       </section>
 
-      {/* What we refuse to do — stated as plainly as what we do. */}
+      {/* What we refuse to do, stated as plainly as what we do. */}
       <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(72px,9vw,112px)]">
         <Reveal>
           <hr className="m-0 h-[5px] border-0 border-t-2 border-b border-text" />

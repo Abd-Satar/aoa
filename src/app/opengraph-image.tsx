@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "A.O.A — As-Sattar Online Academy. Learn the Qur'an in its own language.";
+  "A.O.A | As-Sattar Online Academy. Learn the Qur'an in its own language.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

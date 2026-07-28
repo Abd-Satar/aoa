@@ -20,7 +20,7 @@ export default async function SettingsPage() {
         Site details
       </h1>
       <p className="mt-3 mb-8 max-w-[58ch] text-[15.5px] leading-7 text-ink-78">
-        The values that appear in more than one place — the footer, the
+        The values that appear in more than one place: the footer, the
         enrolment block, the āyah, the YouTube strip.
       </p>
 

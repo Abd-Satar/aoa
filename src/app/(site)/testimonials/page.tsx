@@ -7,9 +7,9 @@ import { Reveal } from "@/components/nur/Reveal";
 import { getTestimonials, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Student stories — A.O.A (As-Sattar Online Academy)",
+  title: "Student stories | A.O.A (As-Sattar Online Academy)",
   description:
-    "What students of A.O.A — As-Sattar Online Academy — say about learning the Qur'an, Arabic and Yoruba with a named teacher. Published only with the student's permission.",
+    "What students of A.O.A (As-Sattar Online Academy) say about learning the Qur'an, Arabic and Yoruba with a named teacher. Published only with the student's permission.",
 };
 
 export default async function StoriesPage() {
@@ -84,8 +84,8 @@ export default async function StoriesPage() {
                 <p className="mt-4 mb-0 max-w-[52ch] text-[16px] leading-7 text-ink-78">
                   In the meantime, the things you would want a testimonial to
                   tell you are all checkable directly: the teachers are named
-                  with their licences, the syllabus for every track is fixed and
-                  published, and the first lesson costs nothing — so you can
+                  with the institutions that trained them, the syllabus for every track is fixed and
+                  published, and the first lesson costs nothing, so you can
                   form your own view before you pay for anything.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-[14px]">
@@ -120,7 +120,7 @@ export default async function StoriesPage() {
             <div>
               <p className="m-0 max-w-[52ch] text-[15.5px] leading-7 text-ink-78">
                 Write to admissions with whatever you would want to have read
-                before you enrolled — the honest version. Tell us the name you
+                before you enrolled, the honest version. Tell us the name you
                 want on it, or ask to stay anonymous. Nothing goes up without
                 you seeing it first, and you can have it taken down at any time.
               </p>

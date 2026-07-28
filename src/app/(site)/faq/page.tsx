@@ -8,9 +8,9 @@ import { siteUrl } from "@/lib/nur-content";
 import { getFaqs, getSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Questions — A.O.A (As-Sattar Online Academy)",
+  title: "Questions | A.O.A (As-Sattar Online Academy)",
   description:
-    "Answers about enrolling at A.O.A — As-Sattar Online Academy: whether you need Arabic to start, which languages classes are taught in, enrolling a child, female teachers, missed weeks, and how the ijāzah is verified.",
+    "Answers about enrolling at A.O.A (As-Sattar Online Academy): whether you need Arabic to start, which languages classes are taught in, enrolling a child, female teachers, missed weeks, and the teacher's qualifications.",
   alternates: { canonical: new URL("/faq", siteUrl).toString() },
 };
 
@@ -41,7 +41,7 @@ export default async function FaqPage() {
       <PageHeader
         eyebrow="Questions"
         title="Before you enroll."
-        intro="The things people ask us most, answered without hedging. If your question is not here, it is a fair question — write to admissions and a person will answer it."
+        intro="The things people ask us most, answered without hedging. If your question is not here, it is a fair question. Write to admissions and a person will answer it."
         ledger={[
           { label: "Questions answered", value: String(faqs.length) },
           { label: "Assessment, price of", value: "0", accent: true },

@@ -1,4 +1,5 @@
 import { ImageSlot } from "./ImageSlot";
+import { ReadMore } from "./ReadMore";
 import { Reveal } from "./Reveal";
 import { founder } from "@/lib/nur-content";
 
@@ -13,7 +14,7 @@ export function Founder() {
   return (
     <section
       id="founder"
-      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[104px]"
+      className="mx-auto max-w-[1200px] scroll-mt-[90px] px-[clamp(20px,5vw,72px)] pt-[clamp(56px,9vw,104px)]"
     >
       <Reveal>
         <span className="mb-3 block text-[13px] tracking-[0.08em] text-ink-70 uppercase">
@@ -25,20 +26,26 @@ export function Founder() {
       </Reveal>
 
       <Reveal>
-        <article className="mt-10 grid items-start gap-x-[clamp(28px,5vw,72px)] gap-y-9 border-t border-text pt-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
+        <article className="mt-7 grid items-start gap-x-[clamp(28px,5vw,72px)] gap-y-7 border-t border-text pt-7 sm:mt-10 sm:gap-y-9 sm:pt-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
           <div>
-            <figure className="cmyk m-0 overflow-visible" data-parallax="-0.045">
+            {/* Capped on phones: a full-width 4:5 portrait is ~440px of
+                scroll on a 350px column, and the biography beside it is the
+                point of the section. */}
+            <figure
+              className="cmyk m-0 max-w-[210px] overflow-visible sm:max-w-none"
+              data-parallax="-0.045"
+            >
               <div className="print aspect-4/5">
                 <ImageSlot
                   src={founder.image}
                   alt={`Portrait of ${founder.name}`}
                   placeholder={founder.placeholder}
-                  sizes="(max-width: 900px) 100vw, 42vw"
+                  sizes="(max-width: 640px) 210px, (max-width: 900px) 100vw, 42vw"
                 />
               </div>
             </figure>
 
-            <dl className="mt-7 mb-0 border-t border-divider">
+            <dl className="mt-6 mb-0 border-t border-divider sm:mt-7">
               <dt className="sr-only">Education and experience</dt>
               {founder.credentials.map((credential) => (
                 <dd
@@ -65,14 +72,23 @@ export function Founder() {
               </span>
             </p>
 
-            {founder.body.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 40)}
-                className="mt-5 mb-0 max-w-[56ch] text-[16px] leading-[29px] text-ink-78"
-              >
-                {paragraph}
-              </p>
-            ))}
+            {/* The opening paragraph always shows; the rest of the
+                biography — three more paragraphs of schooling — folds away
+                on phones, where it was most of the section's height. */}
+            <p className="mt-5 mb-0 max-w-[56ch] text-[15.5px] leading-[27px] text-ink-78 sm:text-[16px] sm:leading-[29px]">
+              {founder.body[0]}
+            </p>
+
+            <ReadMore more="Read his full background" less="Show less">
+              {founder.body.slice(1).map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 40)}
+                  className="mt-4 mb-0 max-w-[56ch] text-[15.5px] leading-[27px] text-ink-78 sm:text-[16px] sm:leading-[29px]"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </ReadMore>
           </div>
         </article>
       </Reveal>

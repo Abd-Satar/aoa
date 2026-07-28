@@ -5,7 +5,7 @@ export async function Ayah() {
   const { ayah } = await getSettings();
 
   return (
-    <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[110px]">
+    <section className="mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(56px,9vw,110px)]">
       <Reveal>
         <figure className="m-0 grid items-start gap-x-[clamp(28px,6vw,96px)] gap-y-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))]">
           <p
