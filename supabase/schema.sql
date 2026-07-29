@@ -267,20 +267,25 @@ insert into public.settings (key, value) values
 on conflict (key) do nothing;
 
 -- ===========================================================================
---  GRANTING YOURSELF ADMIN
+--  SIGNING IN TO THE ADMIN
 --
---  1. In Supabase go to  Authentication -> Users -> Add user
---     Create one with your email and a password, and tick
---     "Auto Confirm User".
+--  There is nothing to do here. Admin sign-in does NOT use Supabase Auth or
+--  the `admins` table — the single administrator's credentials live in the
+--  environment instead:
 --
---  2. Run this, with your email in place of the one below:
+--       ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_SECRET
 --
---       insert into public.admins (user_id, email)
---       select id, email from auth.users where email = 'you@example.com'
---       on conflict (user_id) do nothing;
+--  See .env.example. Set the same three on your host when you deploy.
 --
---  3. Sign in at  /admin/login
+--  WHY `admins` AND `is_admin()` ARE STILL HERE
 --
---  To revoke someone, delete their row from public.admins — they keep the
---  ability to log in but can no longer read drafts or write anything.
+--  They are the deny half of row level security. `is_admin()` returns false
+--  for the anonymous key the public site reads with, which is what confines
+--  visitors to published rows and keeps enquiries unreadable. Leave the table
+--  in place, empty. Adding rows to it grants nothing, because nothing signs
+--  in through Supabase Auth any more.
+--
+--  Admin writes go through the server using SUPABASE_SERVICE_ROLE_KEY, which
+--  bypasses row level security altogether. The gate for those is the session
+--  check in src/lib/admin/actions.ts, not a policy in this file.
 -- ===========================================================================

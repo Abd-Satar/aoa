@@ -38,6 +38,17 @@ export async function submitEnquiry(
     return { status: "error", message: "That email address is too long." };
   }
 
+  // The note column has no length limit, and this endpoint is open to the
+  // public by design. Without a cap, one request can write as much as it
+  // likes into the database.
+  const note = String(form.get("note") ?? "").trim();
+  if (note.length > 2000) {
+    return {
+      status: "error",
+      message: "That message is too long. Please keep it under 2000 characters.",
+    };
+  }
+
   if (!isSupabaseConfigured) {
     return {
       status: "error",
@@ -51,7 +62,7 @@ export async function submitEnquiry(
 
   const { error } = await supabase.from("enquiries").insert({
     email,
-    note: String(form.get("note") ?? "").trim() || null,
+    note: note || null,
   });
 
   if (error) {

@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
-import { getAdminUser, getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAdminSession } from "@/lib/auth";
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { EnquiryRow } from "@/components/admin/EnquiryRow";
 
 export default async function EnquiriesPage() {
-  const admin = await getAdminUser();
+  const admin = await getAdminSession();
   if (!admin) redirect("/admin/login");
 
-  const supabase = await getSupabaseServerClient();
+  const supabase = getSupabaseAdminClient();
   const { data, error } = await supabase!
     .from("enquiries")
     .select("*")

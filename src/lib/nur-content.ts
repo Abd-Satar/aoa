@@ -11,6 +11,12 @@ export type HeroSlide = {
   title: string;
   body: string;
   placeholder: string;
+  /**
+   * Save the file at this path under /public. Until it exists the labelled
+   * placeholder shows instead: Hero checks with publicAssetExists() rather
+   * than handing next/image a path that would render a broken frame.
+   */
+  image?: string;
 };
 
 export const heroSlides: HeroSlide[] = [
@@ -20,6 +26,7 @@ export const heroSlides: HeroSlide[] = [
     title: "Five students, one teacher, every session",
     body: "The ḥalaqah moved onto a screen and lost nothing. Live audio, live correction, and a teacher who knows your name and where you stopped last week.",
     placeholder: "Drop a photo: a student's circle on a video call",
+    image: "/hero-circle.jpg",
   },
   {
     id: "nur-hero-2",
@@ -27,6 +34,7 @@ export const heroSlides: HeroSlide[] = [
     title: "Taught by someone who studied it, at length",
     body: "Years at Markaz Ṣalāḥud-Dīn, Markaz Hudā ar-Raḥmān and Maʿhad al-Iftāʾ wa an-Najāh, then Al-Azhar in Cairo. Every institution is named, and you may ask about any of them before you enrol.",
     placeholder: "Drop a photo: a teacher with a muṣḥaf",
+    image: "/hero-teacher.jpg",
   },
   {
     id: "nur-hero-3",
@@ -34,6 +42,7 @@ export const heroSlides: HeroSlide[] = [
     title: "Twenty-five minutes, twice a week, finished",
     body: "Short sessions built around a child's attention, not an adult's calendar, with a weekly note home so parents can see exactly what was read.",
     placeholder: "Drop a photo: a child reading at a desk",
+    image: "/hero-child.jpg",
   },
 ];
 
@@ -177,8 +186,14 @@ export const founder = {
   name: "Ustaz AbdSattar Abdul Moyosore",
   title: "Founder & Proprietor",
   placeholder: "Portrait: Ustaz AbdSattar Abdul Moyosore",
-  /** Drop a file in /public and set this to e.g. "/founder.jpg". */
-  image: undefined as string | undefined,
+  /**
+   * Save the photograph as `public/founder.jpg`.
+   *
+   * Until that file exists the labelled placeholder is shown instead: the
+   * Founder section checks with `publicAssetExists()` rather than handing
+   * `next/image` a path that would render a broken frame.
+   */
+  image: "/founder.jpg" as string | undefined,
   credentials: [
     "Al-Azhar University, Cairo",
     "Maʿhad al-Iftāʾ wa an-Najāh: Iʿdādiyyah & Thānawiyyah",
@@ -311,12 +326,12 @@ export const navLinks = [
 /**
  * Absolute base for metadata (OpenGraph images, canonical URLs, sitemap).
  *
- * TODO: this domain is a guess derived from the academy's name — set
- * NEXT_PUBLIC_SITE_URL in the deployment environment to the real one.
- * Social previews will not resolve correctly until it is right.
+ * The fallback is the academy's domain. Set NEXT_PUBLIC_SITE_URL anyway on
+ * every environment: preview deploys should not claim to be the live site,
+ * or search engines may index the preview instead.
  */
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://aoacademy.org";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://theaoacademy.org";
 
 /**
  * Every fixed route on the site, for the sitemap and for link checks.
@@ -336,8 +351,6 @@ export const routes = [
 ] as const;
 
 export const contact = {
-  // TODO: point at the academy's real domain — this one is derived from the
-  // name, not confirmed.
   email: "satarmoyosore@gmail.com",
   phone: "+234 703 522 6583",
   // E.164, for the tel: link — no spaces.

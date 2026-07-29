@@ -6,10 +6,10 @@ import Image from "next/image";
  * In the Claude Design runtime this was a drag-and-drop target that
  * persisted whatever you dropped on it. Here it is the same hole in the
  * layout: pass `src` once you have the photograph and it renders through
- * `next/image`; until then it draws a labelled plate so the composition —
- * and the separation filter wrapping it — still reads.
+ * `next/image`; until then it draws a labelled plate so the composition
+ * still reads.
  *
- * Sits inside `figure.cmyk > .print`, which sizes it and applies `#sep-all`.
+ * Renders with `fill`, so the wrapper must be sized and `position: relative`.
  */
 export function ImageSlot({
   src,
@@ -17,12 +17,18 @@ export function ImageSlot({
   placeholder,
   priority = false,
   sizes = "(max-width: 900px) 100vw, 50vw",
+  position = "object-center",
 }: {
   src?: string;
   alt: string;
   placeholder: string;
   priority?: boolean;
   sizes?: string;
+  /**
+   * Where to anchor the crop. Portraits usually want `object-top`, since a
+   * centred crop of a standing figure cuts the head off first.
+   */
+  position?: string;
 }) {
   if (src) {
     return (
@@ -32,7 +38,7 @@ export function ImageSlot({
         fill
         priority={priority}
         sizes={sizes}
-        className="object-cover"
+        className={`object-cover ${position}`}
       />
     );
   }

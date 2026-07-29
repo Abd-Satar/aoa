@@ -151,17 +151,6 @@
   --shadow-lg: 0 14px 36px rgb(0 0 0 / 0.6);
 }
 
-/* The halftone screen multiplies black onto the print. On a dark ground that
-   only crushes it further, so it screens lightly instead. */
-[data-theme="dark"] .cmyk::after {
-  background-image: radial-gradient(
-    circle,
-    rgb(255 255 255 / 0.14) 30%,
-    transparent 32%
-  );
-  mix-blend-mode: screen;
-}
-
 /* The carousel dot's autoplay clock. */
 @keyframes nur-dot {
   from {
@@ -268,69 +257,7 @@
   }
 }
 
-/* ------------------------------------------------------------------------ */
-/*  The print treatment                                                     */
-/*                                                                          */
-/*  `.cmyk .print` — a photograph run through the #sep-all compound filter. */
-/*  Type is set flat: the Broadsheet system also carried .cmyk-head and     */
-/*  .cmyk-num, which set headlines and numerals as three misregistered      */
-/*  text plates, but those read as a drop shadow rather than as printing     */
-/*  and were removed. The filter and the press driver that animates it      */
-/*  live in components/nur/PrintPlates.tsx.                                 */
-/* ------------------------------------------------------------------------ */
-
 @layer components {
-  .cmyk {
-    position: relative;
-    background: var(--color-bg);
-  }
-
-  /* Halftone dot screen over the recombined print. */
-  .cmyk::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: radial-gradient(
-      circle,
-      rgba(0, 0, 0, 0.22) 30%,
-      transparent 32%
-    );
-    background-size: 3px 3px;
-    mix-blend-mode: multiply;
-  }
-
-  .cmyk .print {
-    position: relative;
-    width: 100%;
-  }
-
-  /* The separation only runs on an actual photograph. An empty slot has no
-     continuous tone to separate — the plates would just moiré against the
-     halftone screen — so the placeholder shows clean. */
-  .cmyk .print:has(img) {
-    filter: url(#sep-all);
-  }
-
-  .cmyk .print > * {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  /* Without the press driver — it stands down on exactly these conditions —
-     hover stays the old single cut to the crisp source. */
-  @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
-    .cmyk .print:has(img):hover {
-      filter: none;
-    }
-  }
-
-  /* Likewise the dot screen: it screens a print, not a placeholder. */
-  .cmyk:not(:has(img))::after {
-    content: none;
-  }
-
   /* ---------------------------------------------------------------------- */
   /*  Components                                                            */
   /* ---------------------------------------------------------------------- */

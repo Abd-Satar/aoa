@@ -1,61 +1,41 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { signIn, type ActionState } from "@/lib/admin/actions";
 
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="btn btn-primary mt-2 justify-center py-2.5 text-[15px] disabled:opacity-60"
+    >
+      {pending ? "Signing in…" : "Sign in"}
+    </button>
+  );
+}
+
+/**
+ * The password is posted to a server action and checked there against the
+ * environment. Nothing about the credentials exists in the browser bundle.
+ */
 export function LoginForm() {
-  const router = useRouter();
-  const params = useSearchParams();
-  const next = params.get("next") || "/admin";
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [state, action] = useActionState<ActionState, FormData>(signIn, null);
 
   const input =
     "w-full rounded-md border border-divider bg-surface px-3 py-2.5 text-[15px] text-text " +
     "placeholder:text-ink-45 focus-visible:border-accent focus-visible:outline-none";
 
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setBusy(true);
-
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase) {
-      setError("The database is not connected yet.");
-      setBusy(false);
-      return;
-    }
-
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (signInError) {
-      // Deliberately not distinguishing "no such user" from "wrong password".
-      setError("That email and password did not match.");
-      setBusy(false);
-      return;
-    }
-
-    // Full refresh so the server re-reads the new auth cookie and the proxy
-    // sees the session.
-    router.replace(next);
-    router.refresh();
-  }
-
   return (
-    <form onSubmit={onSubmit} className="grid gap-4">
-      {error && (
+    <form action={action} className="grid gap-4">
+      {state?.error && (
         <p
           role="alert"
           className="m-0 rounded-md border border-divider bg-surface px-4 py-3 text-[14px] leading-6"
         >
-          {error}
+          {state.error}
         </p>
       )}
 
@@ -65,11 +45,10 @@ export function LoginForm() {
         </label>
         <input
           id="email"
+          name="email"
           type="email"
-          autoComplete="email"
+          autoComplete="username"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           className={`${input} mt-2`}
         />
       </div>
@@ -80,22 +59,15 @@ export function LoginForm() {
         </label>
         <input
           id="password"
+          name="password"
           type="password"
           autoComplete="current-password"
           required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           className={`${input} mt-2`}
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={busy}
-        className="btn btn-primary mt-2 justify-center py-2.5 text-[15px] disabled:opacity-60"
-      >
-        {busy ? "Signing in…" : "Sign in"}
-      </button>
+      <SubmitButton />
     </form>
   );
 }

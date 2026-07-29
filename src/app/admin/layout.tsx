@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
-import { getAdminUser } from "@/lib/supabase/server";
+import { isServiceRoleConfigured } from "@/lib/supabase/admin";
+import {
+  authConfigProblem,
+  getAdminSession,
+  isAuthConfigured,
+} from "@/lib/auth";
 import { RESOURCES } from "@/lib/admin/resources";
 import { signOut } from "@/lib/admin/actions";
 import { SetupNotice } from "@/components/admin/SetupNotice";
@@ -16,16 +21,26 @@ export const metadata: Metadata = {
 export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // No database yet: show how to connect one instead of a broken screen.
-  if (!isSupabaseConfigured) {
+  // Not fully configured: name exactly what is missing rather than showing a
+  // login box that could never succeed.
+  if (!isServiceRoleConfigured || !isAuthConfigured()) {
+    const missing: string[] = [];
+    if (!isSupabaseConfigured) {
+      missing.push("NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
+    } else if (!isServiceRoleConfigured) {
+      missing.push("SUPABASE_SERVICE_ROLE_KEY");
+    }
+    const authProblem = authConfigProblem();
+    if (authProblem) missing.push(authProblem);
+
     return (
       <div className="min-h-screen bg-bg">
-        <SetupNotice />
+        <SetupNotice missing={missing} />
       </div>
     );
   }
 
-  const admin = await getAdminUser();
+  const admin = await getAdminSession();
 
   // The login page renders inside this layout, so it cannot require a user.
   // Everything else does, and checks for itself.

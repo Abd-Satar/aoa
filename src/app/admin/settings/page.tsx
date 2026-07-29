@@ -1,13 +1,14 @@
 import { redirect } from "next/navigation";
-import { getAdminUser, getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAdminSession } from "@/lib/auth";
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { SETTINGS_FIELDS } from "@/lib/admin/resources";
 import { SettingsForm } from "@/components/admin/SettingsForm";
 
 export default async function SettingsPage() {
-  const admin = await getAdminUser();
+  const admin = await getAdminSession();
   if (!admin) redirect("/admin/login");
 
-  const supabase = await getSupabaseServerClient();
+  const supabase = getSupabaseAdminClient();
   const { data } = await supabase!.from("settings").select("key, value");
 
   const values = Object.fromEntries(

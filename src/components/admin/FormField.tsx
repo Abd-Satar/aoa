@@ -49,7 +49,13 @@ export function FormField({
               id={id}
               name={field.name}
               type="checkbox"
-              defaultChecked={Boolean(value)}
+              // `undefined` means a new record, so fall back to the field's
+              // own default rather than to unchecked.
+              defaultChecked={
+                value === undefined || value === null
+                  ? Boolean(field.defaultChecked)
+                  : Boolean(value)
+              }
               className="size-4 accent-[var(--color-accent)]"
             />
             <span className="text-ink-78">Visible on the public site</span>

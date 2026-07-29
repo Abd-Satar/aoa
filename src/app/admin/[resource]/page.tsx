@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { getAdminUser, getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAdminSession } from "@/lib/auth";
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getResource, RESOURCES } from "@/lib/admin/resources";
 import { RowActions } from "@/components/admin/RowActions";
 
@@ -21,10 +22,10 @@ export default async function ResourceListPage({
   const resource = getResource(key);
   if (!resource) notFound();
 
-  const admin = await getAdminUser();
+  const admin = await getAdminSession();
   if (!admin) redirect("/admin/login");
 
-  const supabase = await getSupabaseServerClient();
+  const supabase = getSupabaseAdminClient();
   const { data, error } = await supabase!
     .from(resource.table)
     .select("*")

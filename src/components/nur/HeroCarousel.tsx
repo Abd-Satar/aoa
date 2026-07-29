@@ -3,13 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react/ssr";
 import { ImageSlot } from "./ImageSlot";
-import { heroSlides } from "@/lib/nur-content";
+import type { HeroSlide } from "@/lib/nur-content";
 
 const AUTOPLAY_MS = 7000;
 // Past this fraction of the track, releasing commits to the next slide.
 const COMMIT_RATIO = 0.16;
 
-export function HeroCarousel() {
+// Slides arrive as a prop: this is a client component, so it cannot check
+// which photographs exist on disk. Hero does that and passes the result.
+export function HeroCarousel({ slides: heroSlides }: { slides: HeroSlide[] }) {
   const [index, setIndex] = useState(0);
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -182,18 +184,21 @@ export function HeroCarousel() {
                     `translate`) and lags the slide as it moves — the two
                     compose because they use different properties. */}
                 <figure
-                  className="cmyk m-0 overflow-visible"
+                  className="m-0 overflow-visible"
                   data-parallax="-0.035"
                   style={{
                     transform: `translate3d(${(d * -11).toFixed(2)}%, 0, 0)`,
                     transition: settle,
                   }}
                 >
-                  <div className="print aspect-video">
+                  <div className="relative aspect-video w-full overflow-hidden border border-divider">
                     <ImageSlot
+                      src={slide.image}
                       alt={slide.title}
                       placeholder={slide.placeholder}
                       priority={i === 0}
+                      // The figure is roughly half of a 1200px column.
+                      sizes="(max-width: 900px) 100vw, 560px"
                     />
                   </div>
                 </figure>

@@ -2,6 +2,7 @@ import { ImageSlot } from "./ImageSlot";
 import { ReadMore } from "./ReadMore";
 import { Reveal } from "./Reveal";
 import { founder } from "@/lib/nur-content";
+import { publicAssetExists } from "@/lib/public-assets";
 
 /**
  * The founder, on the home page.
@@ -11,6 +12,9 @@ import { founder } from "@/lib/nur-content";
  * than a card that truncates it and a page you have to click through to.
  */
 export function Founder() {
+  // Falls back to the placeholder until public/founder.jpg is actually there.
+  const portrait = publicAssetExists(founder.image) ? founder.image : undefined;
+
   return (
     <section
       id="founder"
@@ -32,15 +36,23 @@ export function Founder() {
                 scroll on a 350px column, and the biography beside it is the
                 point of the section. */}
             <figure
-              className="cmyk m-0 max-w-[210px] overflow-visible sm:max-w-none"
+              className="m-0 max-w-[210px] sm:max-w-none"
               data-parallax="-0.045"
             >
-              <div className="print aspect-4/5">
+              <div className="relative aspect-4/5 overflow-hidden border border-divider">
                 <ImageSlot
-                  src={founder.image}
+                  src={portrait}
                   alt={`Portrait of ${founder.name}`}
                   placeholder={founder.placeholder}
-                  sizes="(max-width: 640px) 210px, (max-width: 900px) 100vw, 42vw"
+                  // Must match what the frame actually measures, or the
+                  // browser picks a source too small and upscales it. The
+                  // column is ~490px on a wide screen, capped at 210px on
+                  // phones by the max-width above.
+                  sizes="(max-width: 640px) 210px, (max-width: 1024px) 45vw, 500px"
+                  // The source is 3:4 in a 4:5 frame, so something gets
+                  // cropped. Anchoring the top keeps the face and loses a
+                  // little at the hem instead.
+                  position="object-top"
                 />
               </div>
             </figure>

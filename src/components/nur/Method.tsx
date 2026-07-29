@@ -2,9 +2,14 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/ssr";
 import { ImageSlot } from "./ImageSlot";
 import { ReadMore } from "./ReadMore";
+import { publicAssetExists } from "@/lib/public-assets";
 import { Reveal } from "./Reveal";
 
+const FIGURE = "/method.jpg";
+
 export function Method() {
+  const figure = publicAssetExists(FIGURE) ? FIGURE : undefined;
+
   return (
     <section
       id="story"
@@ -39,11 +44,15 @@ export function Method() {
           </Link>
         </div>
 
-        <figure className="cmyk m-0 overflow-visible" data-parallax="-0.05">
-          <div className="print aspect-[986/660]">
+        <figure className="m-0 overflow-visible" data-parallax="-0.05">
+          {/* Square, not 3:2: the manuscript is a square photograph of a
+              whole page, and a wider frame cropped its edges away. */}
+          <div className="relative aspect-square w-full overflow-hidden border border-divider">
             <ImageSlot
+              src={figure}
               alt="A teacher and student at work"
               placeholder="Drop a photo: a teacher and student, or a manuscript page"
+              sizes="(max-width: 900px) 100vw, 560px"
             />
           </div>
         </figure>

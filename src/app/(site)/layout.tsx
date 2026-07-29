@@ -1,6 +1,5 @@
 import { SiteNav } from "@/components/nur/SiteNav";
 import { SiteFooter } from "@/components/nur/SiteFooter";
-import { PrintPlates } from "@/components/nur/PrintPlates";
 import { ScrollEffects } from "@/components/nur/ScrollEffects";
 
 /**
@@ -20,9 +19,6 @@ export default function SiteLayout({
       <SiteNav />
       {children}
       <SiteFooter />
-      {/* Filter defs sit outside every section, so no one section's removal
-          can strand the references. */}
-      <PrintPlates />
       <ScrollEffects />
     </div>
   );

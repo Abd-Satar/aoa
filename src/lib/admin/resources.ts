@@ -28,6 +28,14 @@ export type Field = {
   rows?: number;
   /** Half-width on wide screens, so short fields sit side by side. */
   half?: boolean;
+  /**
+   * Starting state for a boolean on a NEW record.
+   *
+   * Without this a checkbox on a new record is unchecked, so the form posts
+   * `false` and everything you create arrives hidden — whatever the column
+   * default says, because the form always sends a value.
+   */
+  defaultChecked?: boolean;
 };
 
 export type Resource = {
@@ -60,6 +68,8 @@ const PUBLISHED_FIELD: Field = {
   type: "boolean",
   help: "Turn this off to keep it here but hide it from the public site.",
   half: true,
+  // On by default: someone adding a program means it to appear.
+  defaultChecked: true,
 };
 
 export const RESOURCES: Resource[] = [
@@ -227,6 +237,9 @@ export const RESOURCES: Resource[] = [
       SORT_FIELD,
       {
         ...PUBLISHED_FIELD,
+        // The one exception: a testimonial must not go live until the person
+        // quoted has read it and agreed.
+        defaultChecked: false,
         help: "Off by default. Only turn this on once they have seen it and agreed.",
       },
     ],

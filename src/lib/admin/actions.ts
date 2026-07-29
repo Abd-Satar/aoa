@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getSupabaseServerClient, getAdminUser } from "@/lib/supabase/server";
+import { getAdminSession, destroySession } from "@/lib/auth";
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { SETTINGS_FIELDS, getResource, type Field } from "./resources";
 
 export type ActionState = { ok?: string; error?: string } | null;
@@ -10,14 +11,17 @@ export type ActionState = { ok?: string; error?: string } | null;
 /**
  * Every mutation starts here.
  *
- * The proxy redirect is only a convenience; this is the check that actually
- * decides. Row level security in Postgres is the third layer — even if this
- * were bypassed, a non-admin's token cannot write.
+ * The proxy redirect is only for the look of the thing; this is the check
+ * that decides. It matters more than it used to: the client returned below
+ * uses the service-role key and bypasses row level security, so this
+ * function is the only thing standing between a request and the database.
+ * Never return the client before the session check passes.
  */
 async function requireAdmin() {
-  const admin = await getAdminUser();
-  if (!admin) redirect("/admin/login");
-  const supabase = await getSupabaseServerClient();
+  const session = await getAdminSession();
+  if (!session) redirect("/admin/login");
+
+  const supabase = getSupabaseAdminClient();
   if (!supabase) redirect("/admin");
   return supabase;
 }
@@ -152,9 +156,40 @@ export async function deleteEnquiry(id: string) {
 }
 
 export async function signOut() {
-  const supabase = await getSupabaseServerClient();
-  await supabase?.auth.signOut();
+  await destroySession();
   redirect("/admin/login");
+}
+
+/**
+ * Sign in. Deliberately a server action: the password is posted to the
+ * server and compared there, so it never reaches any client-side code and
+ * the credentials never leave the environment.
+ */
+export async function signIn(
+  _prev: ActionState,
+  form: FormData,
+): Promise<ActionState> {
+  const { verifyCredentials, createSession, isAuthConfigured } = await import(
+    "@/lib/auth"
+  );
+
+  if (!isAuthConfigured()) {
+    return { error: "Sign-in is not configured on the server." };
+  }
+
+  const email = String(form.get("email") ?? "");
+  const password = String(form.get("password") ?? "");
+
+  if (!verifyCredentials(email, password)) {
+    // A fixed delay on failure: without it, an attacker can measure how long
+    // a wrong answer takes and learn things from the difference.
+    await new Promise((r) => setTimeout(r, 600));
+    // Never say which half was wrong.
+    return { error: "That email and password did not match." };
+  }
+
+  await createSession(email.trim().toLowerCase());
+  redirect("/admin");
 }
 
 /** Postgres errors are precise but unfriendly; translate the common ones. */
@@ -163,7 +198,10 @@ function friendly(message: string) {
     return "Something already uses that web address. Pick a different one.";
   }
   if (/row-level security/i.test(message)) {
-    return "That account is not on the admin list. Add it to the `admins` table.";
+    // Admin writes use the service-role key, which bypasses RLS entirely — so
+    // seeing this means the key is missing or wrong, not that a user lacks a
+    // permission. Check SUPABASE_SERVICE_ROLE_KEY.
+    return "The server's database key is missing or wrong. Check SUPABASE_SERVICE_ROLE_KEY.";
   }
   if (/violates check constraint/i.test(message)) {
     return "One of the values is not allowed. Check the fields and try again.";

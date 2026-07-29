@@ -1,8 +1,16 @@
 import { Reveal } from "./Reveal";
 import { HeroCarousel } from "./HeroCarousel";
-import { ledger, marqueeFacts } from "@/lib/nur-content";
+import { heroSlides, ledger, marqueeFacts } from "@/lib/nur-content";
+import { publicAssetExists } from "@/lib/public-assets";
 
 export function Hero() {
+  // Resolve each slide's photograph here, where the filesystem is reachable.
+  // A slot whose file is not saved yet falls back to its placeholder.
+  const slides = heroSlides.map((slide) => ({
+    ...slide,
+    image: publicAssetExists(slide.image) ? slide.image : undefined,
+  }));
+
   return (
     <section className="relative mx-auto max-w-[1200px] px-[clamp(20px,5vw,72px)] pt-[clamp(36px,7vw,76px)]">
       {/* Two soft plates of ground color that drift on their own clock. */}
@@ -53,7 +61,7 @@ export function Hero() {
       </Reveal>
 
       <Reveal>
-        <HeroCarousel />
+        <HeroCarousel slides={slides} />
       </Reveal>
 
       {/* The ledger: a rule, a run of facts, then dot-leadered figures.

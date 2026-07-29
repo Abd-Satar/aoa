@@ -80,11 +80,7 @@ export const legalDocs: LegalDoc[] = [
       "If a student cancels before a course begins, A.O.A may provide a full or partial refund, subject to any clearly stated non-refundable registration, administrative, or booking fees.",
       "Once a course has started, fees may be non-refundable. However, A.O.A may consider partial refunds in exceptional circumstances.",
       "If A.O.A cancels a course and cannot provide a suitable alternative, affected students may be offered a transfer, credit toward another course, or a refund of eligible fees paid.",
-      // The supplied wording had "[insert number] business days". A processing
-      // window is a commitment, so rather than invent one this states that the
-      // period is given at the time. Replace with a number when you settle on
-      // one.
-      "Approved refunds will normally be made using the original payment method. We will confirm the expected processing time when we approve your request.",
+      "Approved refunds will normally be processed within 6 to 7 working days, using the original payment method.",
       "Nothing in this policy limits any rights that cannot legally be excluded under applicable law.",
       "For refund requests, contact {email}.",
     ],

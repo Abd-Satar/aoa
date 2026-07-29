@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getAdminUser, getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAdminSession } from "@/lib/auth";
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { RESOURCES } from "@/lib/admin/resources";
 
 export default async function AdminDashboard() {
-  const admin = await getAdminUser();
+  const admin = await getAdminSession();
   if (!admin) redirect("/admin/login");
 
-  const supabase = await getSupabaseServerClient();
+  const supabase = getSupabaseAdminClient();
 
   // One count per content type: total, and how many are live.
   const counts = await Promise.all(

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { getAdminUser, getSupabaseServerClient } from "@/lib/supabase/server";
+import { getAdminSession } from "@/lib/auth";
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getResource } from "@/lib/admin/resources";
 import { RecordForm } from "@/components/admin/RecordForm";
 
@@ -14,14 +15,14 @@ export default async function RecordPage({
   const resource = getResource(key);
   if (!resource) notFound();
 
-  const admin = await getAdminUser();
+  const admin = await getAdminSession();
   if (!admin) redirect("/admin/login");
 
   const isNew = id === "new";
   let record: Record<string, unknown> | null = null;
 
   if (!isNew) {
-    const supabase = await getSupabaseServerClient();
+    const supabase = getSupabaseAdminClient();
     const { data } = await supabase!
       .from(resource.table)
       .select("*")

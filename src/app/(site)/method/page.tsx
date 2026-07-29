@@ -5,6 +5,7 @@ import { ArrowRight } from "@phosphor-icons/react/ssr";
 import { PageHeader } from "@/components/nur/PageHeader";
 import { Reveal } from "@/components/nur/Reveal";
 import { ImageSlot } from "@/components/nur/ImageSlot";
+import { publicAssetExists } from "@/lib/public-assets";
 import {
   methodRefusals,
   methodSchedule,
@@ -18,7 +19,13 @@ export const metadata: Metadata = {
     "How a track runs at A.O.A: a free assessment, an honest placement, a named teacher who does not rotate, live sessions of five or one-to-one, a written record of every class, and a syllabus with an end.",
 };
 
+// Shares the home page's method figure. Falls back to the labelled
+// placeholder until the file is saved.
+const FIGURE = "/method.jpg";
+
 export default function MethodPage() {
+  const figure = publicAssetExists(FIGURE) ? FIGURE : undefined;
+
   return (
     <main>
       <PageHeader
@@ -52,11 +59,14 @@ export default function MethodPage() {
               session so that progress is a fact rather than a feeling.
             </p>
           </div>
-          <figure className="cmyk m-0 overflow-visible" data-parallax="-0.05">
-            <div className="print aspect-[986/660]">
+          <figure className="m-0 overflow-visible" data-parallax="-0.05">
+            {/* Square, to match the source. See the note in Method.tsx. */}
+            <div className="relative aspect-square w-full overflow-hidden border border-divider">
               <ImageSlot
+                src={figure}
                 alt="A teacher and student at work"
                 placeholder="Drop a photo: a teacher and student, or a manuscript page"
+                sizes="(max-width: 900px) 100vw, 560px"
               />
             </div>
           </figure>
