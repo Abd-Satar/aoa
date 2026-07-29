@@ -28,6 +28,8 @@ export function AdminNav({ resources }: { resources: Resource[] }) {
   return (
     <nav className="flex flex-row flex-wrap gap-1 lg:sticky lg:top-6 lg:h-fit lg:flex-col">
       {item("/admin", "Overview", true)}
+      {item("/admin/registrations", "Registrations")}
+      {item("/admin/counselling", "Counselling")}
       {item("/admin/enquiries", "Enquiries")}
       {resources.map((r) => item(`/admin/${r.key}`, r.label))}
       {item("/admin/settings", "Site details")}

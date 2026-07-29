@@ -103,7 +103,7 @@ export default async function FaqPage() {
                 </a>
                 <Link
                   className="btn btn-secondary px-[22px] py-3 text-[15px] no-underline"
-                  href="/#enroll"
+                  href="/register"
                 >
                   Book a free assessment
                 </Link>

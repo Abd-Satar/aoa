@@ -109,7 +109,7 @@ export default async function ProgramsPage() {
               <div className="mt-7 flex flex-wrap items-center gap-[14px]">
                 <Link
                   className="btn btn-primary px-[22px] py-3 text-[15px] no-underline"
-                  href="/#enroll"
+                  href="/register"
                 >
                   Book a free assessment
                   <ArrowRight size={15} weight="duotone" />

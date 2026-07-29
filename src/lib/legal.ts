@@ -13,7 +13,7 @@
  */
 
 /** Shown as "Last updated" on all three. Bump when the wording changes. */
-export const LEGAL_UPDATED = "28 July 2026";
+export const LEGAL_UPDATED = "29 July 2026";
 
 export type LegalDoc = {
   slug: string;
@@ -39,6 +39,8 @@ export const legalDocs: LegalDoc[] = [
       "A.O.A (As-Sattar Online Academy) respects your privacy and is committed to protecting your personal information.",
     body: [
       "We may collect your name, email address, phone number, and any information you provide through our enquiry or application forms. We use this information to respond to enquiries, provide information about our courses, process applications, and communicate with you.",
+      "When you register for classes, we also collect the details you give us about the student, including the student's name and age where the classes are for a child, the programme and language you choose, your location, and your availability. We use these only to place the student and arrange lessons.",
+      "If you write to us through our counselling form, we collect the name you give us, the email address or phone number you ask us to reply on, the topic you select, and the message itself. These messages are read only by the founder of A.O.A. They are never published on our website, never shown to other students, and are not shared with anyone else except where we are required to do so by law. We delete them within three weeks, and usually within two, of replying to you. If you would like your message deleted sooner than that, ask us at {email} and we will remove it.",
       "We do not sell your personal information. We may share it only with trusted service providers where necessary to operate our services or where required by law.",
       "We take reasonable steps to keep your information secure and retain it only for as long as necessary.",
       "You may request access to, correction of, or deletion of your personal information, subject to applicable law. You may also withdraw consent where consent is the basis for processing.",

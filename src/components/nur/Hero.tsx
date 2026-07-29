@@ -45,8 +45,8 @@ export function Hero() {
           properly, on a timetable that fits the week you actually have.
         </p>
         <div className="mt-[30px] flex flex-wrap items-center gap-[14px]">
-          <a className="btn btn-primary px-[22px] py-3 text-[15px] no-underline" href="#enroll">
-            Enroll now
+          <a className="btn btn-primary px-[22px] py-3 text-[15px] no-underline" href="/register">
+            Register now
           </a>
           <a
             className="btn btn-secondary px-[22px] py-3 text-[15px] no-underline"

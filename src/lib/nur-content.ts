@@ -320,6 +320,7 @@ export const navLinks = [
   { href: "/programs", label: "Programs" },
   { href: "/method", label: "Our method" },
   { href: "/stories", label: "Stories" },
+  { href: "/counselling", label: "Counselling" },
   { href: "/faq", label: "FAQ" },
 ];
 
@@ -340,6 +341,8 @@ export const siteUrl =
  */
 export const routes = [
   "/",
+  "/register",
+  "/counselling",
   "/programs",
   "/method",
   "/stories",

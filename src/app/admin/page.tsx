@@ -31,6 +31,13 @@ export default async function AdminDashboard() {
 
   const missingTables = counts.filter((c) => c.error);
 
+  // Registrations are the one thing here that arrives on its own, so the
+  // overview leads with how many are still waiting for a reply.
+  const registrations = await supabase!
+    .from("registrations")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "new");
+
   return (
     <div>
       <h1 className="m-0 font-heading text-[clamp(24px,3vw,32px)] leading-[1.14] font-semibold tracking-[-0.02em]">
@@ -47,6 +54,27 @@ export default async function AdminDashboard() {
           Run <code>supabase/schema.sql</code> in the Supabase SQL editor, then
           reload. ({missingTables.map((m) => m.resource.table).join(", ")})
         </p>
+      )}
+
+      {!registrations.error && (
+        <Link
+          href="/admin/registrations"
+          className="group mb-8 flex flex-wrap items-baseline justify-between gap-3 rounded-lg border border-accent/40 bg-surface p-5 text-text no-underline transition-colors hover:border-accent hover:text-text"
+        >
+          <div>
+            <h2 className="m-0 text-[17px] leading-6 group-hover:text-accent-700">
+              Registrations
+            </h2>
+            <p className="mt-2 mb-0 text-[13.5px] leading-5 text-ink-70">
+              {registrations.count
+                ? `${registrations.count} ${registrations.count === 1 ? "person is" : "people are"} waiting to hear back.`
+                : "Everyone who has registered has been contacted."}
+            </p>
+          </div>
+          <span className="font-heading text-[24px] font-semibold tabular-nums">
+            {registrations.count ?? 0}
+          </span>
+        </Link>
       )}
 
       <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(240px,1fr))]">

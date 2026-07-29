@@ -29,10 +29,10 @@ export default async function EnquiriesPage() {
         Enrolment enquiries
       </h1>
       <p className="mt-3 mb-8 max-w-[60ch] text-[15.5px] leading-7 text-ink-78">
-        Everyone who has submitted the &ldquo;Enroll now&rdquo; form, newest
-        first. {outstanding > 0
-          ? `${outstanding} still to answer.`
-          : "All answered."}
+        An archive. These came from the old email-capture form, which the
+        registration form replaced. Nothing new arrives here, and the records
+        are kept only so nobody is lost.{" "}
+        {outstanding > 0 ? `${outstanding} still to answer.` : "All answered."}
       </p>
 
       {error && (

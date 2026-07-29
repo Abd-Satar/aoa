@@ -246,9 +246,9 @@ export function SiteNav() {
 
           <Link
             className="btn btn-primary px-4 py-[11px] text-[11px] tracking-[0.1em] whitespace-nowrap uppercase no-underline transition-[transform,box-shadow,background] duration-300 hover:-translate-y-0.5 hover:shadow-md"
-            href="/#enroll"
+            href="/register"
           >
-            Enroll now
+            Register
           </Link>
         </div>
 
@@ -358,11 +358,11 @@ export function SiteNav() {
 
         <div className="border-t border-divider px-6 py-5">
           <Link
-            href="/#enroll"
+            href="/register"
             onClick={() => setMenuOpen(false)}
             className="btn btn-primary w-full justify-center py-3 text-[16px] no-underline"
           >
-            Enroll now
+            Register now
           </Link>
         </div>
       </div>

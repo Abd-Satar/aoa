@@ -5,6 +5,9 @@ import { redirect } from "next/navigation";
 import { getAdminSession, destroySession } from "@/lib/auth";
 import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { SETTINGS_FIELDS, getResource, type Field } from "./resources";
+import { STATUSES } from "@/lib/registration-fields";
+// Aliased: both modules export a STATUSES, and they are different lists.
+import { STATUSES as COUNSELLING_STATUSES } from "@/lib/counselling-fields";
 
 export type ActionState = { ok?: string; error?: string } | null;
 
@@ -153,6 +156,44 @@ export async function deleteEnquiry(id: string) {
   const supabase = await requireAdmin();
   await supabase.from("enquiries").delete().eq("id", id);
   revalidatePath("/admin/enquiries");
+}
+
+/**
+ * Move a registration along: new -> contacted -> enrolled, or declined.
+ *
+ * The value is checked against the same list the form offers rather than
+ * passed through, because a server action is a public endpoint: anything the
+ * browser can call, anyone can call. The table has a CHECK constraint too, so
+ * a bad value would be rejected anyway — this just fails quietly instead of
+ * throwing.
+ */
+export async function setRegistrationStatus(id: string, status: string) {
+  if (!STATUSES.some((s) => s.value === status)) return;
+
+  const supabase = await requireAdmin();
+  await supabase.from("registrations").update({ status }).eq("id", id);
+  revalidatePath("/admin/registrations");
+}
+
+export async function deleteRegistration(id: string) {
+  const supabase = await requireAdmin();
+  await supabase.from("registrations").delete().eq("id", id);
+  revalidatePath("/admin/registrations");
+}
+
+/** Same shape as the registration status action, against its own list. */
+export async function setCounsellingStatus(id: string, status: string) {
+  if (!COUNSELLING_STATUSES.some((s) => s.value === status)) return;
+
+  const supabase = await requireAdmin();
+  await supabase.from("counselling_requests").update({ status }).eq("id", id);
+  revalidatePath("/admin/counselling");
+}
+
+export async function deleteCounsellingRequest(id: string) {
+  const supabase = await requireAdmin();
+  await supabase.from("counselling_requests").delete().eq("id", id);
+  revalidatePath("/admin/counselling");
 }
 
 export async function signOut() {

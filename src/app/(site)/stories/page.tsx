@@ -114,7 +114,7 @@ export default async function StoriesPage() {
             </p>
             <Link
               className="btn btn-primary px-[22px] py-3 text-[15px] no-underline"
-              href="/#enroll"
+              href="/register"
             >
               Book a free assessment
               <ArrowRight size={15} weight="duotone" />

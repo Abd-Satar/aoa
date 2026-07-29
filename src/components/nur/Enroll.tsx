@@ -1,8 +1,20 @@
-import { EnrollForm } from "./EnrollForm";
+import Link from "next/link";
+import { ArrowRight } from "@phosphor-icons/react/ssr";
 import { Reveal } from "./Reveal";
 import { getSettings } from "@/lib/content";
-import { isSupabaseConfigured } from "@/lib/supabase/config";
 
+/**
+ * The closing call to action on the home page.
+ *
+ * This used to capture an email address inline and file it as an enquiry.
+ * It now sends people to /register instead: a registration collects what is
+ * actually needed to place a student — who the classes are for, what they
+ * want to study, what they can already do and when they are free — and an
+ * address on its own did none of that.
+ *
+ * Contact details stay, but framed as they are meant to be used: for a
+ * question the form cannot answer, not as a second way to sign up.
+ */
 export async function Enroll() {
   const { contact } = await getSettings();
 
@@ -28,16 +40,27 @@ export async function Enroll() {
           <span className="block">The Book doesn&rsquo;t.</span>
         </h2>
         <p className="mt-7 mb-0 max-w-[52ch] text-[17px] leading-7 text-ink-80">
-          Book a free assessment lesson this week. Thirty minutes with a
-          teacher, an honest placement, and a plan you can see the end of. No
-          card, no obligation.
+          Register in one form. Thirty minutes with a teacher, an honest
+          placement, and a plan you can see the end of. No card, no obligation.
         </p>
 
-        <EnrollForm email={contact.email} connected={isSupabaseConfigured} />
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <Link
+            className="btn btn-primary min-h-[48px] px-[26px] text-[15px] no-underline"
+            href="/register"
+          >
+            Register now
+            <ArrowRight size={15} weight="duotone" />
+          </Link>
+          <span className="text-[13px] leading-5 text-ink-65">
+            First lesson free · no card
+          </span>
+        </div>
 
-        <p className="mt-[14px] mb-0 text-[13px] leading-[22px] text-ink-65">
-          Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a>. A
-          person answers, usually within a day.
+        <p className="mt-[18px] mb-0 max-w-[54ch] text-[13px] leading-[22px] text-ink-65">
+          Please register using the form rather than writing in. If you have a
+          question it does not cover, email{" "}
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>.
         </p>
       </Reveal>
     </section>
